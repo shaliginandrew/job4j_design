@@ -3,6 +3,11 @@ package ru.job4j.it;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Класс - итератор для двумерного массива, который последовательно возращает элементы
+ *  @autor Andrey Shalygin
+ *  @version 1.0
+ */
 public class MatrixIt implements Iterator<Integer> {
     private final int[][] data;
     private int row = 0;
