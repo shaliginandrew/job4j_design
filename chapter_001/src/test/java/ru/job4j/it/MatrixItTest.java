@@ -27,7 +27,7 @@ public class MatrixItTest {
     }
 
     @Test
-    public void whenFirstEmptyThenHashNext() { // не работает
+    public void whenFirstEmptyThenHashNext() { //  работает
         int[][] in = {
                 {}, {1}
         };
@@ -87,7 +87,7 @@ public class MatrixItTest {
     }
 
     @Test
-    public void whenMultiHashNext() { // не работает
+    public void whenMultiHashNext() { //  работает
         int[][] in = {
                 {}, {1}
         };
