@@ -25,7 +25,13 @@ public class EvenIt implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        return numbers[point++] % 2 == 0 && point <= numbers.length ? true : false;
+        boolean rsl = false;
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] % 2 == 0) {
+                rsl = true;
+                break;
+            }
+        }  return rsl;
     }
 
     @Override
@@ -33,17 +39,14 @@ public class EvenIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        if (hasNext()) {
-            point++;
-        }
-          return numbers[point];
+        return numbers[point++];
     }
 
 
     public static void main(String[] args) {
-        Iterator it = new EvenIt(new int[] {4, 4, 5, 8});
+        Iterator it = new EvenIt(new int[] {3, 5, 6, 7});
         System.out.println(it.next());
-        //System.out.println(it.next());
+        System.out.println(it.next());
         //System.out.println(it.next());
        // System.out.println(it.next());
     }
