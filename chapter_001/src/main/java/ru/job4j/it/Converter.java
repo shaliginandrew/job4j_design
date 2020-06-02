@@ -9,18 +9,17 @@ import java.util.NoSuchElementException;
  *
  */
 public class Converter {
-    Iterator<Integer> rsl;
-    private int point = 0;
-
+    private Iterator<Integer> current;
 
     /**
      * @param it Объект итератор итератор
      * @return Итератор чисел
      */
     Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
-
+        current = it.next();
 
         return new Iterator<Integer>() {
+
             @Override
             public void remove() {
                 throw new UnsupportedOperationException();
@@ -28,7 +27,12 @@ public class Converter {
 
             @Override
             public boolean hasNext() {
-                return false;
+                boolean rsl = false;
+                if (current == null) {
+                    current = it.next();
+                    rsl = true;
+                }
+                return rsl;
             }
 
             @Override
@@ -36,7 +40,7 @@ public class Converter {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return null;
+                return current.next();
             }
         };
     }
@@ -50,7 +54,5 @@ public class Converter {
         Converter iteratorOfIterators = new Converter();
         it = iteratorOfIterators.convert(its);
         System.out.println(it.next());
-        System.out.println(it.next());
-        System.out.println(it1.next());
     }
 }
