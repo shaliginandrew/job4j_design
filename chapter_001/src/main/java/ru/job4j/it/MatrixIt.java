@@ -17,17 +17,17 @@ public class MatrixIt implements Iterator<Integer> {
         this.data = data;
 
     }
+
+    /**
+     * Метод позволяет пропускать пустые массивы
+     * @return
+     */
     @Override
     public boolean hasNext() {
-        boolean rsl = false;
-        for (int row = 0; row < data.length; row++) {
-            for (int column = 0; column < data[row].length; column++) {
-                if (data[row].length != 0) {
-                    rsl = true;
-                }
-            }
+        while (row < data.length && data[row].length == 0) {
+            row++;
         }
-        return rsl;
+        return row < data.length && column < data[row].length;
     }
 
     @Override

@@ -18,7 +18,7 @@ public class MatrixItTest {
     }
 
     @Test
-    public void whenFirstEmptyThenNext() { // не работает
+    public void whenFirstEmptyThenNext() {
         int[][] in = {
                 {}, {1}
         };
@@ -27,7 +27,7 @@ public class MatrixItTest {
     }
 
     @Test
-    public void whenFirstEmptyThenHashNext() { //  работает
+    public void whenFirstEmptyThenHashNext() {
         int[][] in = {
                 {}, {1}
         };
@@ -59,7 +59,7 @@ public class MatrixItTest {
         assertThat(it.next(), is(4));
     }
     @Test
-    public void whenFewEmpty() { // не работает
+    public void whenFewEmpty() {
         int[][] in = {
                 {1}, {}, {}, {}, {2}
         };
@@ -87,7 +87,7 @@ public class MatrixItTest {
     }
 
     @Test
-    public void whenMultiHashNext() { //  работает
+    public void whenMultiHashNext() {
         int[][] in = {
                 {}, {1}
         };

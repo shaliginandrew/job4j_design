@@ -1,25 +1,26 @@
 package ru.job4j.it;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * Класс - реализация итератора, который будет пробегать по вложенными итераторам без копирования данных.
+ *  есть два итератора один внешний, другой внутренний. Внешний итерирует по итераторам.
+ *  Внутренний по элементам. Изначально внешний итератор имеет ссылку на первый итератор.
  *
  */
 public class Converter {
-    private Iterator<Integer> current;
-
     /**
      * @param it Объект итератор итератор
      * @return Итератор чисел
      */
-    Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
-        current = it.next();
+    public Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
 
         return new Iterator<Integer>() {
 
+       private  Iterator<Integer> current = Collections.emptyIterator();
             @Override
             public void remove() {
                 throw new UnsupportedOperationException();
@@ -27,12 +28,11 @@ public class Converter {
 
             @Override
             public boolean hasNext() {
-                boolean rsl = false;
-                if (current == null) {
-                    current = it.next();
-                    rsl = true;
+
+                while (it.hasNext() && !current.hasNext()) {
+                   current = it.next();
                 }
-                return rsl;
+                return current.hasNext();
             }
 
             @Override
@@ -46,7 +46,7 @@ public class Converter {
     }
 
     public static void main(String[] args) {
-        Iterator<Integer> it;
+        final Iterator<Integer> it;
         Iterator<Integer> it1 = Arrays.asList(1, 2, 3).iterator();
         Iterator<Integer> it2 = Arrays.asList(4, 5, 6).iterator();
         Iterator<Integer> it3 = Arrays.asList(7, 8, 9).iterator();

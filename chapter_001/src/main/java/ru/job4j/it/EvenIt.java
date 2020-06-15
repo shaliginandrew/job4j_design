@@ -26,8 +26,9 @@ public class EvenIt implements Iterator<Integer> {
     @Override
     public boolean hasNext() {
         boolean rsl = false;
-        for (int i = 0; i < numbers.length; i++) {
+        for (int i = point; i < numbers.length; i++) {
             if (numbers[i] % 2 == 0) {
+                point = i;
                 rsl = true;
                 break;
             }
@@ -44,11 +45,9 @@ public class EvenIt implements Iterator<Integer> {
 
 
     public static void main(String[] args) {
-        Iterator it = new EvenIt(new int[] {3, 5, 6, 7});
+        Iterator it = new EvenIt(new int[] {4, 5, 6, 7});
         System.out.println(it.next());
         System.out.println(it.next());
-        //System.out.println(it.next());
-       // System.out.println(it.next());
     }
 }
 
