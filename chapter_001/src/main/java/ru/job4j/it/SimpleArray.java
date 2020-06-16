@@ -1,5 +1,8 @@
 package ru.job4j.it;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import static java.util.Objects.*;
@@ -8,12 +11,13 @@ import static java.util.Objects.*;
  * Класс - универсальная обертка над массивом
  * @param <T>
  */
-public class SimpleArray<T> {
+public class SimpleArray<T> implements Iterable<T> {
     private Object[] objects;
     private int index = 0;
 
     public SimpleArray(int size) {
         this.objects = new Object[size];
+        this.index = index;
     }
 
     /**
@@ -31,10 +35,10 @@ public class SimpleArray<T> {
      */
     public void set(int index, T model) throws IndexOutOfBoundsException {
         try {
-        int trueIndex = checkIndex(index, this.objects.length - 1);
+        int trueIndex = checkIndex(index, this.objects.length);
         this.objects[trueIndex] = model;
         } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
+            System.out.println("Индекс не существует");
         }
     }
 
@@ -43,17 +47,58 @@ public class SimpleArray<T> {
      *  (в середине массива не должно быть пустых ячеек);
      * @param index
      */
-    public void remove(int index) {
-        for (int i = index; i < objects.length; i++) {
-            this.objects[i] = this.objects[i + 1];
+    public void remove(int index) throws IndexOutOfBoundsException {
+        try {
+            if (Objects.checkIndex(index, objects.length) < objects.length) {
+                Object[] objectsDest = new Object[objects.length - 1];
+                System.arraycopy(this.objects, 0, objectsDest, 0, index);
+                System.arraycopy(this.objects, index + 1, objectsDest, index, this.objects.length - index - 1);
+                this.index--;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Индекс не существует");
         }
-        this.objects[this.objects.length - 1] = null;
     }
     /**
      * Возвращает элемент, расположенный по указанному индексу;
      * @param index
      */
-    public T get(int index) {
-        return (T) this.objects[index];
+    public T get(int index) throws IndexOutOfBoundsException {
+        int trueIndex = Integer.parseInt(null);
+        try {
+            trueIndex = checkIndex(index, this.objects.length);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Индекс не существует");
+        }
+        return (T) this.objects[trueIndex];
     }
+
+
+    @Override
+    public Iterator<T> iterator() {
+
+            return (Iterator<T>) new Iterator<Integer>() {
+
+                @Override
+                public void remove() {
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public boolean hasNext() {
+                    return index < objects.length;
+                }
+
+                @Override
+                public Integer next() {
+                    if (!hasNext()) {
+                        throw new NoSuchElementException();
+                    }
+                    return (Integer) objects[index++];
+                }
+            };
+        }
 }
+
+
+
