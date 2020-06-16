@@ -16,6 +16,7 @@ public class Converter {
      * @param it Объект итератор итератор
      * @return Итератор чисел
      */
+
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
 
         return new Iterator<Integer>() {
@@ -54,5 +55,16 @@ public class Converter {
         Converter iteratorOfIterators = new Converter();
         it = iteratorOfIterators.convert(its);
         System.out.println(it.next());
+        System.out.println(it.next());
+        System.out.println(it.next());
+        System.out.println(it.next());
+        System.out.println(it.next());
+        System.out.println(it.next());
+        System.out.println(it.next());
+        System.out.println(it.next());
+        System.out.println(it.next());
     }
+
 }
+
+

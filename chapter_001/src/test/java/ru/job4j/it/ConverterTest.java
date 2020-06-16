@@ -6,6 +6,7 @@ import java.util.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 public class ConverterTest {
+
     Iterator<Integer> it;
 
     @Before
@@ -102,4 +103,5 @@ public class ConverterTest {
         it = iteratorOfIterators.convert(its);
         assertThat(it.next(), is(1));
     }
+
 }
