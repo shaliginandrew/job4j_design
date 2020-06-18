@@ -1,5 +1,5 @@
 package ru.job4j.generic;
-/*
+
 public class UserStore implements Store<User> {
 
     private final Store<User> store = new MemStore<>();
@@ -24,5 +24,3 @@ public class UserStore implements Store<User> {
         return null;
     }
 }
-
- */
