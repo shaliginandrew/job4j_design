@@ -42,7 +42,9 @@ public class SimpleArrayTest {
         simple.add(2);
         simple.add(3);
         simple.add(4);
-        simple.remove(1);
+        simple.remove(0);
+        Integer result = simple.get(0);
+        System.out.println(result);
         // SimpleArray<Integer> result =
         //SimpleArray<Integer> expected =
         //assertThat(result, is(expected));

@@ -33,13 +33,9 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param index
      * @param model
      */
-    public void set(int index, T model) throws IndexOutOfBoundsException {
-        try {
+    public void set(int index, T model) {
         int trueIndex = checkIndex(index, this.objects.length);
         this.objects[trueIndex] = model;
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Индекс не существует");
-        }
     }
 
     /**
@@ -47,29 +43,21 @@ public class SimpleArray<T> implements Iterable<T> {
      *  (в середине массива не должно быть пустых ячеек);
      * @param index
      */
-    public void remove(int index) throws IndexOutOfBoundsException {
-        try {
+    public void remove(int index) {
+
             if (Objects.checkIndex(index, objects.length) < objects.length) {
                 Object[] objectsDest = new Object[objects.length - 1];
                 System.arraycopy(this.objects, 0, objectsDest, 0, index);
                 System.arraycopy(this.objects, index + 1, objectsDest, index, this.objects.length - index - 1);
                 this.index--;
             }
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Индекс не существует");
-        }
     }
     /**
      * Возвращает элемент, расположенный по указанному индексу;
      * @param index
      */
-    public T get(int index) throws IndexOutOfBoundsException {
-        int trueIndex = Integer.parseInt(null);
-        try {
-            trueIndex = checkIndex(index, this.objects.length);
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Индекс не существует");
-        }
+    public T get(int index) {
+          int trueIndex = checkIndex(index, this.objects.length);
         return (T) this.objects[trueIndex];
     }
 
