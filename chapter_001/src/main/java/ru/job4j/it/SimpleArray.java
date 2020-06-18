@@ -1,6 +1,5 @@
 package ru.job4j.it;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -65,7 +64,7 @@ public class SimpleArray<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
 
-            return (Iterator<T>) new Iterator<Integer>() {
+            return (Iterator<T>) new Iterator<Objects>() {
 
                 @Override
                 public void remove() {
@@ -78,11 +77,11 @@ public class SimpleArray<T> implements Iterable<T> {
                 }
 
                 @Override
-                public Integer next() {
+                public Objects next() {
                     if (!hasNext()) {
                         throw new NoSuchElementException();
                     }
-                    return (Integer) objects[index++];
+                    return (Objects) objects[index++];
                 }
             };
         }
