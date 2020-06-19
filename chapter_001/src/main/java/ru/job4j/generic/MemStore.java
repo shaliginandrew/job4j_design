@@ -35,7 +35,7 @@ public final class MemStore<T extends Base> implements Store<T> {
         boolean result = false;
         int findIndex = indexOf(id);
         if (findIndex != -1) {
-            mem.remove(mem.remove(findIndex));
+            mem.remove(findIndex);
             result = true;
         }
         return result;
