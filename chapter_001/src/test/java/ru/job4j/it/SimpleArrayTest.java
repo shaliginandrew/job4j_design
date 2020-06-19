@@ -46,5 +46,6 @@ public class SimpleArrayTest {
          SimpleArray<Integer> result = simple;
         // SimpleArray<Integer> expected =
    //     assertThat(result, is(expected));
+        //
     }
 }
