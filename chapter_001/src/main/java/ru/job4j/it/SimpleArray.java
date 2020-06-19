@@ -43,12 +43,10 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param index
      */
     public void remove(int index) {
-
-            if (Objects.checkIndex(index, objects.length) < objects.length) {
-                Object[] objectsDest = new Object[objects.length - 1];
-                System.arraycopy(this.objects, 0, objectsDest, 0, index);
-                System.arraycopy(this.objects, index + 1, objectsDest, index, this.objects.length - index - 1);
-                this.index--;
+        int trueIndex = checkIndex(index, this.objects.length);
+        if (trueIndex < objects.length && trueIndex >= 0) {
+                System.arraycopy(this.objects, index + 1, this.objects, index, this.index - index - 1);
+                this.objects[this.index--] = null;
             }
     }
     /**

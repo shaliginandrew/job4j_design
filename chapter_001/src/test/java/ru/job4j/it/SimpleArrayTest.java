@@ -37,16 +37,15 @@ public class SimpleArrayTest {
 
     @Test
     public void testRemove() {
-        SimpleArray<Integer> simple = new SimpleArray<Integer>(4);
+        SimpleArray<Integer> simple = new SimpleArray<Integer>(5);
         simple.add(1);
         simple.add(2);
         simple.add(3);
         simple.add(4);
         simple.remove(0);
-        Integer result = simple.get(0);
-        System.out.println(result);
-        // SimpleArray<Integer> result =
+
+       // SimpleArray<Integer> result =
         //SimpleArray<Integer> expected =
-        //assertThat(result, is(expected));
+   //     assertThat(result, is(expected));
     }
 }
