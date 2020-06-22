@@ -25,7 +25,7 @@ import static java.util.Objects.isNull;
 public class SimpleArray<T> implements Iterable<T> {
     private Object[] container;
     private int modCount = 0;
-    private int position = 0;
+    private int position;
 
     public SimpleArray(int size) {
         this.container = new Object[size];
