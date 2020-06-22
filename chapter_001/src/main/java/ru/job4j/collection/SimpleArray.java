@@ -25,48 +25,37 @@ import static java.util.Objects.isNull;
 public class SimpleArray<T> implements Iterable<T> {
     private Object[] container;
     private int modCount = 0;
+    private int position = 0;
 
     public SimpleArray(int size) {
         this.container = new Object[size];
     }
 
     public T get(int index) {
-        T rsl = null;
-        int trueIndex = checkIndex(index, this.container.length);
-        if (trueIndex < container.length && trueIndex >= 0) {
-            rsl = (T) this.container[trueIndex];
-        }
-        return rsl;
+       return (T) container[checkIndex(index, position)];
     }
 
     public void add(T model) {
-        if (container.length % 10 == 0) {
-           new SimpleArray<T>(10 + modCount);
-      }
-        this.container[modCount++] = model;
+        this.modCount++;
+        this.container[position++] = model;
     }
 
     @Override
     public Iterator<T> iterator() throws ConcurrentModificationException {
         int expectedModCount = modCount;
-        return (Iterator<T>) new Iterator<Objects>() {
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
+        return (Iterator<T>) new Iterator<T>() {
 
             @Override
             public boolean hasNext() {
-                return modCount < container.length;
+                return position < container.length;
             }
 
             @Override
-            public Objects next() {
-                if (expectedModCount != modCount) {
+            public T next() {
+                if (expectedModCount != position) {
                     throw new ConcurrentModificationException();
                 }
-                return (Objects) container[modCount++];
+                return (T) container[position++];
             }
         };
     }

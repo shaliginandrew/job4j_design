@@ -23,7 +23,7 @@ import static java.util.Objects.checkIndex;
  * исключение.
  * В методах, где используется индекс нужно делать валидацию. Индекс должен находиться в рамках добавленных элементов. Например, вы добавили
  * 3 элемента. Каким может быть индекс? [0, 2]. Для проверки индекса используйте метод Objects.checkIndex.
- */
+
 public class SimpleLinked<E> implements Iterable<E> {
   private Node<E> node;
   private int modCount = 0;
@@ -60,3 +60,4 @@ public class SimpleLinked<E> implements Iterable<E> {
         };
     }
 }
+ */
