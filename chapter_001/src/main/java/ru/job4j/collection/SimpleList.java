@@ -39,7 +39,6 @@ public class SimpleList<E> implements Iterable<E> {
             tail = node;
         }
       modCount++;
-
     }
 
     public E get(int index) {
@@ -65,25 +64,25 @@ public class SimpleList<E> implements Iterable<E> {
     public Iterator<E> iterator() throws ConcurrentModificationException {
         int expectedModCount = modCount;
         return new Iterator<E>() {
-            private int cursor;
+            private Node<E> current = head;
+            private Node<E> next;
 
             @Override
             public boolean hasNext() {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return cursor < modCount;
+                return current != null;
             }
 
             @Override
             public E next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
-                } else {
-                    Node<E> temp = head.next;
-                    cursor++;
-                    return temp.value;
                 }
+                E value = current.value;
+                current = current.next;
+                return value;
             }
         };
     }
