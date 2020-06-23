@@ -43,19 +43,23 @@ public class SimpleArray<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() throws ConcurrentModificationException {
         int expectedModCount = modCount;
-        return (Iterator<T>) new Iterator<T>() {
+        return new Iterator<T>() {
+            private int cursor;
 
             @Override
             public boolean hasNext() {
-                return position < container.length;
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                return cursor < position;
             }
 
             @Override
             public T next() {
-                if (expectedModCount != position) {
-                    throw new ConcurrentModificationException();
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
                 }
-                return (T) container[position++];
+                return (T) container[cursor++];
             }
         };
     }
