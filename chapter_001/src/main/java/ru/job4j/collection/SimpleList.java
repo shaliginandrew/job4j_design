@@ -62,7 +62,7 @@ public class SimpleList<E> implements Iterable<E> {
     }
 
     @Override
-    public Iterator<E> iterator() {
+    public Iterator<E> iterator() throws ConcurrentModificationException {
         int expectedModCount = modCount;
         return new Iterator<E>() {
             private int cursor;
