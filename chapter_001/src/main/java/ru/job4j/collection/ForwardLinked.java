@@ -10,7 +10,8 @@ import java.util.Optional;
  * @param <T>
  */
 public class ForwardLinked<T> implements Iterable<T> {
-    private Node<T> head;
+    private Node<T> head, tail;
+    private int size = 0;
 
     public void add(T value) {
         Node<T> node = new Node<T>(value, null);
@@ -23,14 +24,38 @@ public class ForwardLinked<T> implements Iterable<T> {
             tail = tail.next;
         }
         tail.next = node;
+        size++;
     }
 
+    public T get(int index) {
+        Node<T> ref = head;
+        for (int i = 0; i < index; i++) {
+            ref = ref.next;
+        }
+        return ref.value;
+    }
 
     public void deleteFirst() throws NoSuchElementException {
      if (head == null) {
-     throw new NoSuchElementException("Список пуст");
+            throw new NoSuchElementException("Список пуст");
 }
      head = head.next;
+    }
+
+
+    public T deleteLast() throws NoSuchElementException {
+        if (head == null) {
+            throw new NoSuchElementException("Список пуст");
+        }
+
+
+    Node<T> ref = head;
+    for (int i = 0; i < size; i++) {
+       ref = ref.next;
+    }
+    size--;
+    return ref.value;
+
     }
 
 
