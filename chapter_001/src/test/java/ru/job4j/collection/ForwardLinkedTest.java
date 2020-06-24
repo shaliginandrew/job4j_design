@@ -41,7 +41,6 @@ public class ForwardLinkedTest {
 
      Iterator<Integer> it = linked.iterator();
      assertThat(linked.get(1), is(2));
-
     }
 }
 

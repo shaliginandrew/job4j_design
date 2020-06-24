@@ -48,10 +48,9 @@ public class ForwardLinked<T> implements Iterable<T> {
             throw new NoSuchElementException("Список пуст");
         }
 
-
-    Node<T> ref = head;
-    for (int i = 0; i < size; i++) {
-       ref = ref.next;
+        Node<T> ref = head;
+        for (int i = 0; i < size; i++) {
+        ref = ref.next;
     }
     size--;
     return ref.value;
