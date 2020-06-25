@@ -38,10 +38,9 @@ public class ForwardLinkedTest {
         linked.add(1);
         linked.add(2);
         linked.deleteLast();
-
-
      Iterator<Integer> it = linked.iterator();
      assertThat(linked.get(1), is(2));
     }
+
 }
 

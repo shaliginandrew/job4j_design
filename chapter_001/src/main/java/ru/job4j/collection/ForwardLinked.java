@@ -2,7 +2,6 @@ package ru.job4j.collection;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 /**
  * Необходимо реализовать метод delete для односвязного списка.
@@ -10,21 +9,25 @@ import java.util.Optional;
  * @param <T>
  */
 public class ForwardLinked<T> implements Iterable<T> {
-    private Node<T> head, tail;
-    private int size = 0;
+    private Node<T> head;
+
+    private int count = 0;
 
     public void add(T value) {
         Node<T> node = new Node<T>(value, null);
         if (head == null) {
             head = node;
+            count++;
             return;
         }
-        Node<T> tail = head;
-        while (tail.next != null) {
-            tail = tail.next;
+        Node<T> current = head;
+        while (current.next != null) {
+            current = current.next;
+
         }
-        tail.next = node;
-        size++;
+        count++;
+        current.next = node;
+        current = node;
     }
 
     public T get(int index) {
@@ -40,22 +43,34 @@ public class ForwardLinked<T> implements Iterable<T> {
             throw new NoSuchElementException("Список пуст");
 }
      head = head.next;
+     count--;
     }
 
 
     public T deleteLast() throws NoSuchElementException {
+        Node<T> current = head;
         if (head == null) {
             throw new NoSuchElementException("Список пуст");
         }
 
-        Node<T> ref = head;
-        for (int i = 0; i < size; i++) {
-        ref = ref.next;
-    }
-    size--;
-        T temp = ref.value;
-     ref.value = null;
-     return temp;
+        // если остался один элемент
+        if (count == 1) {
+            T temp = current.value;
+            head = null;
+            count--;
+       }
+
+// встаем на предпоследний элемент
+        for (int i = 0; i < count - 2; i++) {
+        current = current.next;
+        }
+// получаем значение последнего элемента и сохраняем его в temp
+
+        T temp = current.next.value;
+// обнуляем ссылку на последний элемент
+        current.next = null;
+        count--;
+        return temp;
     }
 
 
