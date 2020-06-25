@@ -52,7 +52,6 @@ public class ForwardLinked<T> implements Iterable<T> {
         if (head == null) {
             throw new NoSuchElementException("Список пуст");
         }
-
         // если остался один элемент
         if (count == 1) {
             T temp = current.value;
