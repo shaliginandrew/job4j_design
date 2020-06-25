@@ -57,6 +57,7 @@ public class ForwardLinked<T> implements Iterable<T> {
             T temp = current.value;
             head = null;
             count--;
+            return temp;
        }
 
 // встаем на предпоследний элемент
