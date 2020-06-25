@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
  */
 public class ForwardLinked<T> implements Iterable<T> {
     private Node<T> head;
+    private Node<T> tail;
 
     private int count = 0;
 
@@ -27,7 +28,7 @@ public class ForwardLinked<T> implements Iterable<T> {
         }
         count++;
         current.next = node;
-        current = node;
+
     }
 
     public T get(int index) {
@@ -36,6 +37,31 @@ public class ForwardLinked<T> implements Iterable<T> {
             ref = ref.next;
         }
         return ref.value;
+    }
+
+    /**
+     * Все, что надо сделать в данном случае - это пробежаться по исходному списку и последовательно перецепить
+     * все его элементы в начало нового списка. Полученный в результате список будет обращением исходного списка
+     * Запоминаем следующий node текущего, чтобы продолжить его
+     * Устанавливаем ссылку, указывающую на предыдущее
+     * Изменям предыдущий на текущий, потому что текущий также правильно установил ссылку
+     * Меняем первыую node, которая не правильно устанавливала его ссылку, чтобы быть тем, кто был замечен на первом шаге.
+     *           До:
+     * Node 1 (Head) -> Node 2 -> Node 3 -> Node 4 (Tail) -> null
+     *          После:
+     *    null <- Node 1 (Tail) <- Node 2 <- Node 3 <- Node 4 (Head)
+     */
+    public void revert() {
+        Node<T> prev = null;
+        Node<T> current = head;
+        Node<T> next = null;
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        head = prev;
     }
 
     public void deleteFirst() throws NoSuchElementException {
@@ -49,10 +75,10 @@ public class ForwardLinked<T> implements Iterable<T> {
 
     public T deleteLast() throws NoSuchElementException {
         Node<T> current = head;
+        Node<T> prev = null;
         if (head == null) {
             throw new NoSuchElementException("Список пуст");
         }
-        // если остался один элемент
         if (count == 1) {
             T temp = current.value;
             head = null;
@@ -60,17 +86,18 @@ public class ForwardLinked<T> implements Iterable<T> {
             return temp;
        }
 
-// встаем на предпоследний элемент
-        for (int i = 0; i < count - 2; i++) {
-        current = current.next;
-        }
-// получаем значение последнего элемента и сохраняем его в temp
 
-        T temp = current.next.value;
+// встаем на предпоследний элемент
+            while (current.next != null) {
+                prev = current;
+                current = current.next;
+            }
+            // получаем значение последнего элемента и сохраняем его в temp
+
 // обнуляем ссылку на последний элемент
-        current.next = null;
+        prev.next = null;
         count--;
-        return temp;
+        return current.value;
     }
 
 
