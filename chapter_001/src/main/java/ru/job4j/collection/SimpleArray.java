@@ -31,6 +31,7 @@ public class SimpleArray<T> implements Iterable<T> {
         this.container = new Object[size];
     }
 
+
     public T get(int index) {
        return (T) container[checkIndex(index, position)];
     }
