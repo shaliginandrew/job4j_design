@@ -2,6 +2,7 @@ package ru.job4j.collection;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * Необходимо реализовать метод delete для односвязного списка.
@@ -32,6 +33,8 @@ public class ForwardLinked<T> implements Iterable<T> {
     }
 
     public T get(int index) {
+        Objects.checkIndex(index, count);
+
         Node<T> ref = head;
         for (int i = 0; i < index; i++) {
             ref = ref.next;
@@ -42,9 +45,11 @@ public class ForwardLinked<T> implements Iterable<T> {
     /**
      * Все, что надо сделать в данном случае - это пробежаться по исходному списку и последовательно перецепить
      * все его элементы в начало нового списка. Полученный в результате список будет обращением исходного списка
-     * Запоминаем следующий node текущего, чтобы продолжить его
-     * Устанавливаем ссылку, указывающую на предыдущее
-     * Изменям предыдущий на текущий, потому что текущий также правильно установил ссылку
+     *
+     * 1. Получаем в next следующую node после current
+     * 2. Следующая node после current становится предыдущей, с исходным значением null
+     * 3 Предыдущая node становится на current
+     * 4. current node становится next
      * Меняем первыую node, которая не правильно устанавливала его ссылку, чтобы быть тем, кто был замечен на первом шаге.
      *           До:
      * Node 1 (Head) -> Node 2 -> Node 3 -> Node 4 (Tail) -> null
@@ -72,10 +77,8 @@ public class ForwardLinked<T> implements Iterable<T> {
      count--;
     }
 
-
     public T deleteLast() throws NoSuchElementException {
         Node<T> current = head;
-        Node<T> prev = null;
         if (head == null) {
             throw new NoSuchElementException("Список пуст");
         }
@@ -85,21 +88,14 @@ public class ForwardLinked<T> implements Iterable<T> {
             count--;
             return temp;
        }
-
-
-// встаем на предпоследний элемент
-            while (current.next != null) {
-                prev = current;
+            while (current.next.next != null) {
                 current = current.next;
             }
-            // получаем значение последнего элемента и сохраняем его в temp
-
-// обнуляем ссылку на последний элемент
-        prev.next = null;
+            T value = current.next.value;
+        current.next = null;
         count--;
-        return current.value;
+        return value;
     }
-
 
     @Override
     public Iterator<T> iterator() {
