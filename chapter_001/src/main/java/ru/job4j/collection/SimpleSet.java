@@ -37,7 +37,6 @@ public class SimpleSet<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator()  {
-        int expectedModCount = count;
         return new Iterator<T>() {
 
             @Override
