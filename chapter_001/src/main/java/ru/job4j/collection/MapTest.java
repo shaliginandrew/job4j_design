@@ -23,7 +23,9 @@ public class MapTest {
             if (o == null || getClass() != o.getClass()) {
                 return false;
             }
+
             User user = (User) o;
+
             if (children != user.children) {
                 return false;
             }
@@ -33,13 +35,21 @@ public class MapTest {
             return birthday.equals(user.birthday);
         }
 
+        @Override
+        public int hashCode() {
+            int result = name.hashCode();
+            result = 31 * result + children;
+            result = 31 * result + birthday.hashCode();
+            return result;
+        }
     }
 
     /**
-     * В резульатае выведутся два разных значения с разными ключами
+     * В резульатае выведется одна пара ключ - со значением two
      *
-     * После создания , объекты имеют разный hashcode, так как выдялются разные ячейки памяти
-     * После переопределения equals, объекты равны по equals, но второй объект попадет в другую ячейку массива cсылок Node,
+     * После создания объектов и переопределения hashcode , объекты имеют одинаковый hashcode, так как hashcode полей у них одинаковый
+     * После переопределения equals, объекты дополнительно равны по equals, значит ключи равны
+     * Объекты попадаут в одну ячейку массива, и старое vavlue перезапишется на новое
      * так как они имеют разный hash
      * @param args
      */
