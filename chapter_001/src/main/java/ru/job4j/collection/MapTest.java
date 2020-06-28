@@ -1,7 +1,5 @@
 package ru.job4j.collection;
-
 import org.junit.Test;
-
 import java.util.*;
 
 public class MapTest {
@@ -18,27 +16,36 @@ public class MapTest {
         }
 
         @Override
-        public int hashCode() {
-            int result = name.hashCode();
-            result = 31 * result + children;
-            result = 31 * result + birthday.hashCode();
-            return result;
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            User user = (User) o;
+            if (children != user.children) {
+                return false;
+            }
+            if (!name.equals(user.name)) {
+                return false;
+            }
+            return birthday.equals(user.birthday);
         }
+
     }
 
     /**
-     * В резульатае выведутся два занчения с разным ключем
-     * После переопределения hashcode, объекты имеют одинаковый hashcode, так как их поля имеют одинаковые значения
-     * Значит hash функция вычислит для них одинаковые значения, а раз так то и индекс в массиве ссылок на Node будет у них одинаковый
-     * В то же время два объекта при создании ссылаются на разные ячеки помяти, соответсвенно не равны по  equals
-     * Возникнет коллизия, когда два объекта встанут на один индекс и второй будет связан с первым с помощью укзателя next на следующий
+     * В резульатае выведутся два разных значения с разными ключами
+     *
+     * После создания , объекты имеют разный hashcode, так как выдялются разные ячейки памяти
+     * После переопределения equals, объекты равны по equals, но второй объект попадет в другую ячейку массива cсылок Node,
+     * так как они имеют разный hash
      * @param args
      */
     public static void main(String[] args) {
         User first = new User("Андрей", 10, new GregorianCalendar(2010, 8, 14));
         User second = new User("Андрей", 10, new GregorianCalendar(2010, 8, 14));
-        System.out.println(first.name.hashCode());
-        System.out.println(first.birthday.hashCode());
         System.out.println(first.hashCode());
         System.out.println(second.hashCode());
         System.out.println(first.equals(second));
