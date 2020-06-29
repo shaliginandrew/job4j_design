@@ -11,7 +11,4 @@ public class SimpleStack<T> {
         linked.add(value);
     }
 
-    public void reverse() {
-        linked.revert();
-    }
 }
