@@ -39,6 +39,7 @@ public class SimpleArray<T> implements Iterable<T> {
     public void add(T model) {
         this.modCount++;
         this.container[position++] = model;
+
     }
 
     @Override

@@ -14,7 +14,6 @@ public class MapTest {
             this.birthday = birthday;
 
         }
-
         @Override
         public boolean equals(Object o) {
             if (this == o) {
@@ -42,8 +41,8 @@ public class MapTest {
             result = 31 * result + birthday.hashCode();
             return result;
         }
-    }
 
+    }
     /**
      * В резульатае выведется одна пара ключ - со значением two
      *

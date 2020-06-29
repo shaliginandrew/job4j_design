@@ -5,53 +5,42 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class SimpleSet<T> implements Iterable<T> {
-    int size;
-    int count = 0;
+/**
+ * Реализовать коллекцию SimpleSet. Коллекция должна обеспечивать void add(E e) и реализовывать Iterable<E>.
+ * Коллекция не должна хранить дубликаты.
+ * Set - внутри для хранения данных использует обычные массивы.
+ * Код будет идентичным, как и в SimpleArray(Это код из задания реализации списка на массиве).
+ * как можно за счет композиции сократить количества кода?
+ * Здесь нужно использовать SimpleArray в реализации SimpleSet.
+ * @param <T>
+ */
+public class SimpleSet<T> implements Iterable<T>  {
+     int size;
+     int count;
 
     public SimpleSet(int size) {
         this.size = size;
     }
 
-    private SimpleArray<T> linked = new SimpleArray<T>(size);
+    private SimpleArray<T> link = new SimpleArray<T>(size);
 
     void add(T e) {
-        if (count == 0) {
-            linked.add(e);
-            count++;
-        }
-        if (count != 0) {
-            for (int i = 0; i < count; i++) {
-                if (!linked.get(i).equals(e)) {
-                    linked.add(e);
-                    count++;
-                }
+        boolean flag = true;
+        for (int i = 0; i < count; i++) {
+            if (e.equals(link.get(i))) {
+                flag = false;
+                return;
             }
         }
-    }
-
-    public T get(int index) {
-        Objects.checkIndex(index, count);
-        return linked.get(index);
+        if (true) {
+            link.add(e);
+            count++;
+        }
     }
 
     @Override
-    public Iterator<T> iterator()  {
-        return new Iterator<T>() {
-
-            @Override
-            public boolean hasNext() {
-                return  count < size;
-            }
-
-            @Override
-            public T next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                return (T) linked.get(count++);
-            }
-        };
+    public Iterator<T> iterator() {
+        return link.iterator();
     }
 }
 
