@@ -10,17 +10,17 @@ public class SimpleSetTest {
 
     @Test
     public void whenAdd() {
-        SimpleSet<Integer> link = new SimpleSet<Integer>(6);
+        SimpleSet<Integer> link = new SimpleSet<>(6);
         link.add(1);
         link.add(2);
         link.add(1);
         link.add(2);
         link.add(3);
         link.add(0);
-        for (Integer rsl : link) {
+       for (Integer rsl : link) {
            System.out.println(rsl);
     }
-  }
+}
 }
 
 
