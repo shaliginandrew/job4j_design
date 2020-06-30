@@ -22,7 +22,7 @@ public class SimpleSet<T> implements Iterable<T>  {
 
     public SimpleSet(int size) {
         this.size = size;
-        link = new SimpleArray<T>(size);
+        this.link = new SimpleArray<T>(size);
     }
 
 
