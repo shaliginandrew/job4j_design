@@ -15,26 +15,25 @@ import java.util.Objects;
  * @param <T>
  */
 public class SimpleSet<T> implements Iterable<T>  {
-     int size;
-     int count;
+     private int size;
+     private int count;
+     private SimpleArray<T> link;
+
 
     public SimpleSet(int size) {
         this.size = size;
+        link = new SimpleArray<T>(size);
     }
-    private SimpleArray<T> link = new SimpleArray<T>(size);
+
 
     void add(T e) {
-        boolean flag = true;
         for (int i = 0; i < count; i++) {
             if (e.equals(link.get(i))) {
-                flag = false;
-                return;
+              return;
             }
         }
-        if (true) {
-            link.add(e);
-            count++;
-        }
+        link.add(e);
+        count++;
     }
 
     @Override

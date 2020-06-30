@@ -1,5 +1,6 @@
 package ru.job4j.collection;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 import org.junit.Test;
@@ -10,16 +11,14 @@ public class SimpleSetTest {
 
     @Test
     public void whenAdd() {
-        SimpleSet<Integer> link = new SimpleSet<Integer>(6);
-        link.add(1);
-        link.add(2);
-        link.add(1);
-        link.add(2);
-        link.add(3);
-        link.add(0);
-       for (Integer rsl : link) {
-           System.out.println(rsl);
-    }
+        SimpleSet<Integer> set = new SimpleSet<Integer>(3);
+        set.add(1);
+        set.add(2);
+        set.add(1);
+        Iterator<Integer> it = set.iterator();
+        assertThat(it.next(), is(1));
+        assertThat(it.next(), is(2));
+        assertFalse(it.hasNext());
     }
 }
 
