@@ -12,7 +12,11 @@ public class SimpleQueue<T> {
             in.push(out.pop());
         }
         count--;
-        return out.pop();
+        T rsl = out.pop();
+        for (int i = 0; i < count; i++) {
+            out.push(in.pop());
+        }
+        return rsl;
     }
 /*
  Метод push(T value) - помещает значение в конец

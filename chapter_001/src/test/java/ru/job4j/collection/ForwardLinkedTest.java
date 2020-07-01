@@ -29,7 +29,8 @@ public class ForwardLinkedTest {
         linked.add(2);
         linked.deleteFirst();
         Iterator<Integer> it = linked.iterator();
-      assertThat(it.next(), is(2));
+        System.out.println(it.next());
+        assertThat(it.next(), is(2));
     }
 
     @Test

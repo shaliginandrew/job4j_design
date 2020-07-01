@@ -1,10 +1,9 @@
 package ru.job4j.collection;
 
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import org.w3c.dom.Node;
+
+import java.util.*;
 
 /**
  * Реализовать собственную структуру данных - HashMap [#294199]
@@ -63,7 +62,7 @@ private boolean moveToNextCell() {
             @Override
             public V next() {
                 valuesCounter++;
-                return subiIterator.next().value;
+                return subiIterator.next().getValue();
             }
         };
     }
@@ -94,6 +93,22 @@ private boolean moveToNextCell() {
 
         public void setValue(V value) {
             this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node<K, V> node = (Node<K, V>) o;
+            return hash == node.hash &&
+                    Objects.equals(nodes, node.nodes) &&
+                    Objects.equals(key, node.key) &&
+                    Objects.equals(value, node.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(nodes, hash, key, value);
         }
     }
 
