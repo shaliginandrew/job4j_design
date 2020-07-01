@@ -1,9 +1,6 @@
 package ru.job4j.collection;
 
 
-import org.w3c.dom.Node;
-
-import java.security.Key;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -25,16 +22,12 @@ import java.util.List;
 public class SimpleHashMap<K, V> implements Iterable<V> {
  private int size;
  private int defaultCapacity = 16;
- private MyEntry<K, V>[] values;
+ private Node<K, V>[] hashTable;
 
-    public SimpleHashMap(int size) {
-        this.size = size;
-        this.values = new MyEntry[defaultCapacity];
+    public SimpleHashMap() {
+        hashTable = new Node[defaultCapacity];
     }
 
-    public MyEntry<K, V>[] getValues() {
-        return values;
-    }
 
     @Override
     public Iterator<V> iterator() {
@@ -49,24 +42,22 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
                     return false;
                 }
 
-if (subiIterator == null || !subiIterator.hasNext()) {
-if (moveToNextCell()) {
-   // subiIterator = values[counterArray].getValue().
-} else {
-    return false;
+       if (subiIterator == null || !subiIterator.hasNext()) {
+       if (moveToNextCell()) {
+       subiIterator = hashTable[counterArray].getNodes().iterator();
+       } else {
+         return false;
+       }
+    }
+       return subiIterator.hasNext();
 }
-}
-                return subiIterator.hasNext();
-            }
 
-
-
-            private boolean moveToNextCell() {
+private boolean moveToNextCell() {
                 counterArray++;
-                while (counterArray < values.length && values[counterArray] == null) {
+                while (counterArray < hashTable.length && hashTable[counterArray] == null) {
                     counterArray++;
                 }
-                return counterArray < values.length && values[counterArray] != null;
+                return counterArray < hashTable.length && hashTable[counterArray] != null;
             }
 
             @Override
@@ -89,17 +80,8 @@ if (moveToNextCell()) {
             nodes = new LinkedList<Node<K, V>>();
         }
 
-    }
-
-
-
-    static class MyEntry<K, V> {
-        private final K key;
-        private V value;
-
-        public MyEntry(K key, V value) {
-            this.key = key;
-            this.value = value;
+        public List<Node<K, V>> getNodes() {
+            return nodes;
         }
 
         public K getKey() {
@@ -116,33 +98,36 @@ if (moveToNextCell()) {
     }
 
 
-
     boolean insert(K key, V value) {
         boolean insert = true;
         for (int i = 0; i < size; i++) {
-            if (values[i].getKey().equals(key)) {
-                values[i].setValue(value);
+            if (hashTable[i].getKey().equals(key)) {
+                hashTable[i].setValue(value);
                 insert = false;
             }
         }
         ensureCapa();
-        values[size++] = new MyEntry<K, V>(key, value);
+        hashTable[size++] = new Node<K, V>(key, value);
         return insert;
     }
 
     private void ensureCapa() {
-        if (size == values.length) {
-            int newSize = values.length * 2;
-            values = Arrays.copyOf(values, newSize);
+        if (size == hashTable.length) {
+            int newSize = hashTable.length * 2;
+            hashTable = Arrays.copyOf(hashTable, newSize);
         }
+    }
+
+    public int size() {
+        return size;
     }
 
 
     V get(K key) {
         for (int i = 0; i < size; i++) {
-            if (values[i] != null) {
-                if (values[i].getKey().equals(key)) {
-                    return values[i].getValue();
+            if (hashTable[i] != null) {
+                if (hashTable[i].getKey().equals(key)) {
+                    return hashTable[i].getValue();
                 }
             }
         }
@@ -153,8 +138,8 @@ if (moveToNextCell()) {
     boolean delete(K key) {
         boolean result = false;
         for (int i = 0; i < size; i++) {
-            if (values[i].getKey().equals(key)) {
-                values[i] = null;
+            if (hashTable[i].getKey().equals(key)) {
+                hashTable[i] = null;
                 size--;
                 result = true;
                 condenseArray(i);
@@ -165,8 +150,7 @@ if (moveToNextCell()) {
 
     private void condenseArray(int start) {
         for (int i = start; i < size; i++) {
-            values[i] = values[i + 1];
+            hashTable[i] = hashTable[i + 1];
         }
     }
-
 }
