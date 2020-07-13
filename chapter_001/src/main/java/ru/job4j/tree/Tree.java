@@ -3,6 +3,11 @@ package ru.job4j.tree;
 import java.util.*;
 import java.util.function.Predicate;
 
+
+/**
+
+
+
 class Tree<E> implements SimpleTree<E> {
     private final Node<E> root;
     private Node<E> parentNode;
@@ -51,8 +56,10 @@ class Tree<E> implements SimpleTree<E> {
     -root уже выйдет, буде проверять всех детей поочереди и дети поочереди будут выходить из нее
     -если не находим совпадений, то добавляем всех детей тех элементов что выше перебирали и перебираем дальше,
      пока не найдем или очередь не закончится
+ */
+/*
 
-     */
+
     @Override
     public Optional<Node<E>> findBy(E value) {
         Optional<Node<E>> rsl = Optional.empty();
@@ -81,11 +88,11 @@ class Tree<E> implements SimpleTree<E> {
             if (condition.test(el)) {
 
             }
-
         }
         data.addAll(el.children);
     }
 }
 
+ */
 
 
