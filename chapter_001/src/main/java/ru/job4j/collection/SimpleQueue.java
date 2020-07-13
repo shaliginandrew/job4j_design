@@ -1,17 +1,22 @@
 package ru.job4j.collection;
 
 public class SimpleQueue<T> {
-    int count = 0;
+    int incount = 0;
+    int outcount = 0;
     private final SimpleStack<T> in = new SimpleStack<>();
     private final SimpleStack<T> out = new SimpleStack<>();
 /*
  * Метод poll() - должен возвращать первое значение и удалять его из коллекции.
  */
     public T poll() {
-       while (count != 0) {
-           out.push(in.pop());
-           count--;
-       }
+        if (outcount == 0) {
+            while (incount != 0) {
+                out.push(in.pop());
+                outcount++;
+                incount--;
+            }
+        }
+        outcount--;
         return out.pop();
     }
 /*
@@ -19,6 +24,6 @@ public class SimpleQueue<T> {
  */
     public void push(T value) {
         in.push(value);
-        count++;
+        incount++;
     }
 }

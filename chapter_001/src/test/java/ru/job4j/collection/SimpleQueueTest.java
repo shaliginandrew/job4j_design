@@ -52,4 +52,15 @@ public class SimpleQueueTest {
         assertThat(queue.poll(), is(2));
         assertThat(queue.poll(), is(3));
     }
+
+    @Test
+    public void test2() {
+        SimpleQueue<Integer> queue = new SimpleQueue<>();
+        queue.push(1);
+        queue.push(2);
+        queue.push(3);
+        assertThat(queue.poll(), is(1));
+       queue.push(4);
+        assertThat(queue.poll(), is(2));
+    }
 }
