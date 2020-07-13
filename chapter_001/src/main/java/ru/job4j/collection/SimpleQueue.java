@@ -8,22 +8,17 @@ public class SimpleQueue<T> {
  * Метод poll() - должен возвращать первое значение и удалять его из коллекции.
  */
     public T poll() {
-        for (int i = 0; i < count - 1; i++) {
-            in.push(out.pop());
-        }
-        count--;
-        T rsl = out.pop();
-        for (int i = 0; i < count; i++) {
-            out.push(in.pop());
-        }
-        return rsl;
+       while (count != 0) {
+           out.push(in.pop());
+           count--;
+       }
+        return out.pop();
     }
 /*
  Метод push(T value) - помещает значение в конец
  */
     public void push(T value) {
-        out.push(value);
+        in.push(value);
         count++;
-
     }
 }
