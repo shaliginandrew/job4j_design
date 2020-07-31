@@ -1,12 +1,9 @@
 package ru.job4j.tree;
 
+import ru.job4j.collection.SimpleList;
+
 import java.util.*;
 import java.util.function.Predicate;
-
-
-/**
-
-
 
 class Tree<E> implements SimpleTree<E> {
     private final Node<E> root;
@@ -32,21 +29,19 @@ class Tree<E> implements SimpleTree<E> {
         return rsl;
     }
 
-    public Predicate<Node<E>> isBinary() {
-        // Queue<Node<E>> data = new LinkedList<>();
-        //data.offer(this.root);
-       // while (!data.isEmpty()) {
-
-        Predicate<Node<E>> condition = findBy(el -> el.children.size() > 2).isEmpty();
-           // Node<E> el = data.poll();
-          //  if (el.children.size() > 2) {
-          //      return false;
-         //   }
-         //   data.addAll(el.children);
-       // }
-        return condition;
+    public boolean isBinary() {
+        Queue<Node<E>> data = new LinkedList<>();
+        data.offer(this.root);
+        while (!data.isEmpty()) {
+            Node<E> el = data.poll();
+            Predicate<Node<E>> condition = e -> (el.children.size() > 2);
+            if (condition.test(el)) {
+                return false;
+            }
+            data.addAll(el.children);
+        }
+        return true;
     }
-
     /*
     1. Создаем перменную пустую Node в обертке Optional
     2. Создается очередь data из Node  реализации LinkedList
@@ -56,43 +51,21 @@ class Tree<E> implements SimpleTree<E> {
     -root уже выйдет, буде проверять всех детей поочереди и дети поочереди будут выходить из нее
     -если не находим совпадений, то добавляем всех детей тех элементов что выше перебирали и перебираем дальше,
      пока не найдем или очередь не закончится
- */
-/*
-
-
+     */
     @Override
     public Optional<Node<E>> findBy(E value) {
         Optional<Node<E>> rsl = Optional.empty();
-        Predicate<Node<E>> condition = el -> el.value.equals(value);
-        // Queue<Node<E>> data = new LinkedList<>();
-        //data.offer(this.root);
-      //  while (!data.isEmpty()) {
-         //   Node<E> el = data.poll();
-            //if (el.value.equals(value)) {
-              //  rsl = Optional.of(el);
-              // break;
-          //  }
-           // data.addAll(el.children);
-       // }
-        return rsl;
-    }
-
-    public Optional<Node<E>> findByPredicate(Predicate<Node<E>> condition) {
-
-
         Queue<Node<E>> data = new LinkedList<>();
         data.offer(this.root);
-
         while (!data.isEmpty()) {
             Node<E> el = data.poll();
+            Predicate<Node<E>> condition = x -> el.value.equals(value);
             if (condition.test(el)) {
-
+                rsl = Optional.of(el);
+                break;
             }
+            data.addAll(el.children);
         }
-        data.addAll(el.children);
+        return rsl;
     }
 }
-
- */
-
-
