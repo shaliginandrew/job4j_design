@@ -9,6 +9,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
+/*
+
+
 public class SimpleHashMapTest {
 
     @Test
@@ -59,3 +62,4 @@ public class SimpleHashMapTest {
         assertThat(null, is(map.get("51")));
     }
 }
+ */

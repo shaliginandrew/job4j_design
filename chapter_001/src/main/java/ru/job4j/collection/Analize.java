@@ -13,17 +13,18 @@ public class Analize {
       *  Сколько удалено пользователей.
       */
      public Info diff(List<User> previous, List<User> current) {
-        Info info = new Info();
-        info.added = current.size() - previous.size();
-        info.deleted = previous.size() - current.size();
-        if (previous.size() == current.size()) {
-            for (int i = 0; i < previous.size(); i++) {
-                if (previous.get(i).id == current.get(i).id && !previous.get(i).name.equals(current.get(i).name)) {
-                        info.changed++;
-                    }
-                }
-            }
-        return info;
+         Info info = new Info();
+         Map<Integer, User> curMap = current.stream().collect(Collectors.toMap(User :: getId, user -> user));
+         for (User item : previous) {
+         if (curMap.get(item.id) == null) {
+             info.deleted++;
+         }
+         if (curMap.get(item.id) != null && !curMap.get(item.id).name.equals(item.name)) {
+             info.changed++;
+             }
+         }
+         info.added = current.size() + info.deleted - previous.size();
+         return info;
         }
 
         public static class User {
@@ -34,7 +35,11 @@ public class Analize {
             this.id = id;
             this.name = name;
         }
-    }
+
+        public int getId() {
+            return id;
+        }
+     }
 
     public static class Info {
         int added;
