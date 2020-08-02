@@ -30,17 +30,7 @@ class Tree<E> implements SimpleTree<E> {
     }
 
     public boolean isBinary() {
-        Queue<Node<E>> data = new LinkedList<>();
-        data.offer(this.root);
-        while (!data.isEmpty()) {
-            Node<E> el = data.poll();
-            Predicate<Node<E>> condition = e -> (el.children.size() > 2);
-            if (condition.test(el)) {
-                return false;
-            }
-            data.addAll(el.children);
-        }
-        return true;
+        return findByPredicate(el -> el.children.size() > 2).isEmpty();
     }
     /*
     1. Создаем перменную пустую Node в обертке Optional
@@ -54,12 +44,15 @@ class Tree<E> implements SimpleTree<E> {
      */
     @Override
     public Optional<Node<E>> findBy(E value) {
+        return findByPredicate(el -> el.value.equals(value));
+    }
+
+    public Optional<Node<E>> findByPredicate(Predicate<Node<E>> condition) {
         Optional<Node<E>> rsl = Optional.empty();
         Queue<Node<E>> data = new LinkedList<>();
         data.offer(this.root);
         while (!data.isEmpty()) {
             Node<E> el = data.poll();
-            Predicate<Node<E>> condition = x -> el.value.equals(value);
             if (condition.test(el)) {
                 rsl = Optional.of(el);
                 break;
