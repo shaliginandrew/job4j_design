@@ -7,31 +7,27 @@ import java.util.List;
 
 public class LogFilter {
     public static List<String> filter(String file) {
-    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-        List<String> lines = new ArrayList<String>();
         List<String> lines404 = new ArrayList<String>();
+        try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+        List<String> lines = new ArrayList<String>();
         in.lines().forEach(lines :: add);
-        int count2 = 0;
+        int count404 = 0;
         for (String line : lines) {
             int count = 0;
-            count2++;
+            count404++;
             for (String s1 : line.split(" ")) {
             if (count == 8) {
                 if (Integer.parseInt(s1) == 404) {
-                   // System.out.println(s1);
-                   //System.out.println(count2);
-                  // lines.get(count2);
-                    System.out.println(lines.get(count2 - 1));
+                     lines404.add(lines.get(count404 - 1));
                 }
             }
             count++;
             }
         }
-
     } catch (Exception e) {
         e.printStackTrace();
     }
-    return null;
+    return lines404;
     }
 
     public static void main(String[] args) {
