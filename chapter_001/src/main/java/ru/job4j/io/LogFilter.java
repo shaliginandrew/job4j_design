@@ -7,24 +7,16 @@ import java.util.List;
 
 public class LogFilter {
     public static List<String> filter(String file) {
-        List<String> lines404 = new ArrayList<String>();
+       List<String> lines404 = new ArrayList<String>();
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
         List<String> lines = new ArrayList<String>();
-        in.lines().forEach(lines :: add);
-        int count404 = 0;
-        for (String line : lines) {
-            int count = 0;
-            count404++;
-            for (String s1 : line.split(" ")) {
-            if (count == 8) {
-                if (Integer.parseInt(s1) == 404) {
-                     lines404.add(lines.get(count404 - 1));
-                }
+        in.lines().filter(line -> line.contains("404")).forEach(line -> {
+            int count = line.split(" ").length;
+            if (line.split(" ")[count - 2].equals("404")) {
+            lines404.add(line);
             }
-            count++;
-            }
-        }
-    } catch (Exception e) {
+        });
+        } catch (Exception e) {
         e.printStackTrace();
     }
     return lines404;
