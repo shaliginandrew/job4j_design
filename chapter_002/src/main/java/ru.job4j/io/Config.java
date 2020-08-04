@@ -19,16 +19,9 @@ public class Config {
             in.lines().filter(line -> !line.contains("##") && line.length() > 0).forEach(line -> {
                 values.put(line.split("=")[0], line.split("=")[1]);
             });
-
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
     }
 
     public String value(String key) {
