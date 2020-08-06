@@ -14,10 +14,15 @@ public class Config {
         this.path = path;
     }
 
+    /**
+     * Метод должен загружать пару ключ-значение в карту values.
+     * Важно в файле могут быть пустые строки и комментарии их нужно пропускать.
+     */
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
-            in.lines().filter(line -> !line.contains("##") && line.length() > 0).forEach(line -> {
-                values.put(line.split("=")[0], line.split("=")[1]);
+            in.lines().filter(line -> !line.contains("#") && line.length() > 0).forEach(line -> {
+                String[] lineValue = line.split("=");
+                values.put(lineValue[0], lineValue[1]);
             });
         } catch (Exception e) {
             e.printStackTrace();

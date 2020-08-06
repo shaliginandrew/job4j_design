@@ -20,7 +20,7 @@ public class ConfigTest {
 
     @Test
     public void testTwo() {
-        String path = "./data/pair_without_comment.properties";
+        String path = "./chapter_002/data/pair_without_comment.properties";
         Config config = new Config(path);
         config.load();
         assertThat(
