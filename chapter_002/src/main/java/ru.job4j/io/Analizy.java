@@ -12,34 +12,33 @@ public class Analizy {
      * @param target - имя файла для записи результатов анализа доступности сервера
      */
     public void unavailable(String source, String target) {
-        List<String> targetList = new ArrayList<String>();
-        try (BufferedReader in = new BufferedReader(new FileReader(source))) {
-            List<String> sourceList = new ArrayList<String>();
-            sourceList = in.lines().filter(line -> line.length() > 0).collect(Collectors.toList());
-            for (int i = 0; i < sourceList.size(); i++) {
-                if (sourceList.get(i).contains("400") || sourceList.get(i).contains("500")) {
-                    for (int j = i + 1; j < sourceList.size(); j++) {
-                        if (!(sourceList.get(j).contains("400") || sourceList.get(j).contains("500"))) {
-                            targetList.add(sourceList.get(i).split(" ")[1] + ";" + sourceList.get(j).split(" ")[1]);
-                            i = j;
-                            break;
-                        }
+        try (BufferedReader in = new BufferedReader(new FileReader(source));
+        PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
+            String read;
+            boolean flagStart = false;
+            boolean flagEnd = false;
+            String[] lineStart = null;
+            String[] lineEnd = null;
+            while ((read = in.readLine()) != null) {
+                if (read.length() > 0) {
+                    if ((read.contains("400") || read.contains("500")) && !flagStart) {
+                        flagStart = true;
+                        lineStart = read.split(" ");
                     }
-               }
+                    if (!(read.contains("400") || read.contains("500")) && flagStart) {
+                        flagEnd = true;
+                        lineEnd = read.split(" ");
+                    }
+                    if (flagStart && flagEnd) {
+                        out.println(lineStart[1] + ";" + lineEnd[1]);
+                       flagStart = false;
+                       flagEnd = false;
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        try (PrintWriter out  = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
-            for (String list : targetList) {
-                out.println(list);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     public static void main(String[] args) {
