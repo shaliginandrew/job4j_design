@@ -12,8 +12,8 @@ public class Analizy {
      * @param target - имя файла для записи результатов анализа доступности сервера
      */
     public void unavailable(String source, String target) {
-        try (BufferedReader in = new BufferedReader(new FileReader(source));
-        PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
+        List<String> targetList = new ArrayList<String>();
+        try (BufferedReader in = new BufferedReader(new FileReader(source))) {
             String read;
             boolean flagStart = false;
             boolean flagEnd = false;
@@ -21,7 +21,7 @@ public class Analizy {
             String[] lineEnd = null;
             while ((read = in.readLine()) != null) {
                 if (read.length() > 0) {
-                    if ((read.contains("400") || read.contains("500")) && !flagStart) {
+                    if ((read.contains("400") || read.contains("500")) && (!flagStart)) {
                         flagStart = true;
                         lineStart = read.split(" ");
                     }
@@ -30,11 +30,19 @@ public class Analizy {
                         lineEnd = read.split(" ");
                     }
                     if (flagStart && flagEnd) {
-                        out.println(lineStart[1] + ";" + lineEnd[1]);
-                       flagStart = false;
-                       flagEnd = false;
+                        targetList.add(lineStart[1] + ";" + lineEnd[1]);
+                        flagStart = false;
+                        flagEnd = false;
                     }
                 }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+}
+        try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
+            for (String line : targetList) {
+                out.println(line);
             }
         } catch (Exception e) {
             e.printStackTrace();
