@@ -9,57 +9,35 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-/*
+
 
 
 public class SimpleHashMapTest {
 
     @Test
-    public void testStandardMapOne() {
-        SimpleHashMap<String, Integer> map = new SimpleHashMap<String, Integer>();
-        map.insert("Lars", 1);
-      //  map.insert("Lars", 2);
-     //   map.insert("Lars", 1);
+    public void test1Add() {
+        SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
+
+        map.insert(1, "а");
+        map.insert(2, "б");
+        map.insert(3, "в");
+        map.insert(4, "г");
+        map.insert(5, "д");
+        map.insert(6, "е");
+        map.insert(7, "ж");
+        map.insert(8, "з");
+        map.insert(9, "к");
+        map.insert(10, "л");
+        map.insert(11, "м");
+        map.insert(12, "н");
+        map.insert(13, "о");
+        map.insert(14, "п");
+        map.insert(15, "р");
+        map.insert(16, "с");
+        map.insert(17, "т");
+        map.insert(18, "у");
+        map.insert(19, "ф");
         System.out.println(map.iterator().next());
-        //assertThat(map.get("Lars"), is(1));
-    }
-
-    @Test
-    public void testStandardMapTwo() {
-        SimpleHashMap<String, Integer> map = new SimpleHashMap<String, Integer>();
-        map.insert("Lars", 1);
-        map.insert("Bars", 4);
-        map.insert("Dog",  0);
-        assertThat(map.get("Bars"), is(4));
-    }
-
-    @Test
-    public void testSize() {
-        SimpleHashMap<String, Integer> map = new SimpleHashMap<String, Integer>();
-        for (int i = 0; i < 100; i++) {
-            map.insert(String.valueOf(i), i);
-        }
-        assertThat(map.size(), is(100));
-    }
-
-    @Test
-    public void testSizeGet() {
-        SimpleHashMap<String, Integer> map = new SimpleHashMap<String, Integer>();
-        for (int i = 0; i < 100; i++) {
-            map.insert(String.valueOf(i), i);
-        }
-        assertThat(map.get("51"), is(51));
-    }
-
-
-    @Test
-    public void delete() {
-        SimpleHashMap<String, Integer> map = new SimpleHashMap<String, Integer>();
-        for (int i = 0; i < 100; i++) {
-            map.insert(String.valueOf(i), i);
-        }
-        map.delete("51");
-        assertThat(null, is(map.get("51")));
+        System.out.println(map.iterator().next());
     }
 }
- */
