@@ -21,8 +21,8 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
     private int capacity = 16;
     private double loadFactor = 0.75;
     private int modCount = 0;
-    private int position = 0;
-
+    private int size = 0;
+    int k = 0;
 
     public SimpleHashMap() {
         this.table = new Node[capacity];
@@ -35,14 +35,23 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
         int expectedModCount = modCount;
 
         return new Iterator<K>() {
-            private int cursor;
 
+            boolean result = false;
             @Override
             public boolean hasNext() {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return cursor < position;
+
+                for (int i = k; i < table.length; i++) {
+                    if (table[i] != null) {
+
+                        result = true;
+                        k = i + 1;
+                        break;
+                    }
+                }
+                return result;
             }
 
             @Override
@@ -50,7 +59,7 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (K) table[cursor++];
+                return null;
             }
         };
     }
@@ -79,16 +88,18 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
 
     boolean insert(K key, V value) {
         boolean result = false;
-        if (position <= table.length * loadFactor) {
+        if (size <= table.length * loadFactor) {
             int hash = key.hashCode() % capacity;
             if (table[hash] == null) {
                 this.modCount++;
-                table[position++] = new Node<>(key, value, null);
+                table[hash] = new Node<>(key, value, null);
+                //System.out.println(table[hash].key);
+              //  System.out.println(table[hash].value);
                 result = true;
             }
-        } else if (position > table.length * loadFactor) {
+        } else if (size > table.length * loadFactor) {
             Node<K, V>[] oldTable = table;
-            position = 0;
+            size = 0;
             capacity *= 2;
             table = new Node[capacity];
             for (int i = 0; i < oldTable.length; i++) {
@@ -96,7 +107,7 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
                     int hash = key.hashCode() % capacity;
                     if (table[hash] == null) {
                         this.modCount++;
-                        table[position++] = new Node<>(key, value, null);
+                        table[hash] = new Node<>(key, value, null);
                         result = true;
                     }
                 }
@@ -110,29 +121,11 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
         map.insert(1, "а");
         map.insert(2, "б");
         map.insert(3, "в");
-        map.insert(4, "г");
-        map.insert(5, "д");
-        map.insert(6, "е");
-        map.insert(7, "ж");
-        map.insert(8, "з");
-        map.insert(9, "к");
-        map.insert(10, "л");
-        map.insert(11, "м");
-        map.insert(12, "н");
-        map.insert(13, "о");
-        map.insert(14, "п");
-        map.insert(15, "р");
-        map.insert(16, "с");
-        map.insert(17, "т");
-        map.insert(18, "у");
-        map.insert(19, "ф");
-        System.out.println(map.iterator().next());
-        System.out.println(map.capacity);
+        System.out.println(map.iterator().hasNext());
+        System.out.println(map.iterator().hasNext());
+        System.out.println(map.iterator().hasNext());
+        System.out.println(map.iterator().hasNext());
+        System.out.println(map.iterator().hasNext());
+
     }
 }
-
-
-
-
-
-
