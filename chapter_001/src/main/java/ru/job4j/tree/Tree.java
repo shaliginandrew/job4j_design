@@ -57,7 +57,7 @@ class Tree<E> implements SimpleTree<E> {
                 rsl = Optional.of(el);
                 break;
             }
-            data.addAll(el.children);
+             data.addAll(el.children);
         }
         return rsl;
     }
