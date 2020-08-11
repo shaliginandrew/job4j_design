@@ -2,7 +2,6 @@ package ru.job4j.collection;
 
 
 import java.util.*;
-import java.util.function.Predicate;
 
 /**
  * Реализовать собственную структуру данных - HashMap [#294199]
@@ -17,16 +16,13 @@ import java.util.function.Predicate;
  *
  * Методы разрешения коллизий реализовывать не надо. Например: если при добавлении ключ уже есть, то возвращать false.
  */
-public class SimpleHashMap<K, V> implements Iterable<V> {
+public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node> {
     private Node<K, V>[] table;
     private int capacity = 16;
     private double loadFactor = 0.75;
     private int modCount = 0;
     private int size = 0;
-    int k = 0;
-    int m = 0;
-
-
+    private int it = 0;
 
     public SimpleHashMap() {
         this.table = new Node[capacity];
@@ -35,14 +31,12 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
     }
 
     @Override
-    public Iterator<V> iterator() throws ConcurrentModificationException {
-        int expectedModCount = modCount;
+    public Iterator<SimpleHashMap.Node> iterator() throws ConcurrentModificationException {
 
 
-        return new Iterator<V>() {
+        return new Iterator<SimpleHashMap.Node>() {
+            int expectedModCount = modCount;
 
-
-            V result2 = null;
 
             @Override
             public boolean hasNext() {
@@ -50,29 +44,24 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                for (int i = m; i < table.length; i++) {
+
+                for (int i = it; i < table.length; i++) {
                     if (table[i] != null) {
                         result = true;
-                        m = (i + 1);
+                        it = i + 1;
                         break;
                     }
                 }
-
                 return result;
             }
+
             @Override
-            public V next() {
+            public SimpleHashMap.Node next() {
                 if (!hasNext()) {
-                  throw new NoSuchElementException();
+                    throw new NoSuchElementException();
                 }
-                for (int i = k; i < table.length; i++) {
-                    if (table[i] != null) {
-                        result2 = table[i].value;
-                        k = (i + 1);
-                        break;
-                    }
-                }
-                return result2;
+                  Node<K, V> result = table[it - 1];
+                return result;
             }
         };
     }
@@ -92,7 +81,7 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
 
     /**
      * Метод добавления:
-     *
+     * 1.
      *
      * @param key
      * @param value
@@ -107,16 +96,17 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
                 this.modCount++;
                 size++;
                 table[hash] = new Node<>(key, value, null);
+                 System.out.println(table[hash].value + " " + hash);
                 result = true;
             }
         } else if (size > table.length * loadFactor) {
-           resizeAdd(key, value);
+        resize(key, value);
+        result = true;
         }
         return result;
     }
 
-    public boolean resizeAdd(K key,  V value) {
-        boolean result = false;
+    public void resize(K key, V value) {
         Node<K, V>[] oldTable = table;
         capacity *= 2;
         table = new Node[capacity];
@@ -127,11 +117,12 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
                     this.modCount++;
                     size++;
                     table[hash] = new Node<>(key, value, null);
-                    result = true;
+                    System.out.println(table[hash].value + " " + hash);
                     break;
                 }
             }
-        } return result;
+        }
+
     }
 
     public static void main(String[] args) {
@@ -153,15 +144,22 @@ public class SimpleHashMap<K, V> implements Iterable<V> {
         map.insert(15, "р");
         map.insert(16, "с");
         map.insert(17, "т");
-        System.out.println(map.iterator().next());
-        System.out.println(map.iterator().next());
-        System.out.println(map.iterator().next());
-        System.out.println(map.iterator().next());
-        System.out.println(map.iterator().next());
-        System.out.println(map.iterator().next());
-        System.out.println(map.iterator().next());
-        System.out.println(map.iterator().next());
-        System.out.println(map.iterator().next());
-        System.out.println(map.iterator().next());
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
+        System.out.println(map.iterator().next().value);
     }
 }
