@@ -28,16 +28,19 @@ public void sort(String source, String target) {
     String read;
     try (BufferedReader in = new BufferedReader(new FileReader(source))) {
         in.lines().forEach(line -> {
+
             String[] list = line.split(":");
+            //String[] list2 = list[1].split(",");
             email.add(list[1]);
             sourceMap.put(list[1], list[0]);
-           // targetMap.put(list[0], email);
+            targetMap.put(list[0], email);
         });
 
-        for (String key : sourceMap.keySet()) {
 
 
-        }
+
+
+
 
 
 
@@ -45,9 +48,29 @@ public void sort(String source, String target) {
         e.printStackTrace();
     }
 
+    for (String key : sourceMap.keySet()) {
+        boolean flag1 = true;
+        boolean flag2 = false;
+        int i = 0;
+
+        if (flag1) {
+            String[] list2 = email.get(i).split(",");
+            if (flag2) {
+
+                for (int k = 0; k < list2.length; k++) {
+                    if (key.contains(list2[k])) {
+                        System.out.println(sourceMap.get(key));
+                    }
+
+                }
+            }
 
 
-
+        }
+        i++;
+        flag1 = false;
+        flag2 = true;
+    }
 
 
     try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
