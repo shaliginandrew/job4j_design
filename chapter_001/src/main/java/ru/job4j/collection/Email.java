@@ -22,25 +22,17 @@ import java.util.*;
 public class Email {
 
 public void sort(String source, String target) {
-    Map<String, String> sourceMap = new HashMap<>();
-    Map<String, List<String>> targetMap = new HashMap<>();
+    Map<String, String> map1 = new HashMap<>();
+    Map<String, String> map2 = new HashMap<>();
     List<String> email = new ArrayList<>();
+    List<String> email2 = new ArrayList<>();
+    List<String> email3 = new ArrayList<>();
     String read;
     try (BufferedReader in = new BufferedReader(new FileReader(source))) {
-        in.lines().forEach(line -> {
-
-            String[] list = line.split(":");
-            //String[] list2 = list[1].split(",");
-            email.add(list[1]);
-            sourceMap.put(list[1], list[0]);
-            targetMap.put(list[0], email);
-        });
-
-
-
-
-
-
+       in.lines().forEach(line -> {
+          //String[] list = line.split(":");
+          email.add(line);
+       });
 
 
 
@@ -48,35 +40,32 @@ public void sort(String source, String target) {
         e.printStackTrace();
     }
 
-    for (String key : sourceMap.keySet()) {
-        boolean flag1 = true;
-        boolean flag2 = false;
-        int i = 0;
-
-        if (flag1) {
-            String[] list2 = email.get(i).split(",");
-            if (flag2) {
-
-                for (int k = 0; k < list2.length; k++) {
-                    if (key.contains(list2[k])) {
-                        System.out.println(sourceMap.get(key));
-                    }
-
-                }
-            }
+ for (int i = 0; i < email.size(); i++) {
 
 
-        }
-        i++;
-        flag1 = false;
-        flag2 = true;
-    }
+
+     for (int j = 1; j < email.size(); j++) {
+
+
+
+         String[] list = email.get(i).split(":");
+         if (!email2.contains(list[1])) {
+             email2.add(list[1]);
+             email2.add(list[0]);
+         }
+
+     }
+ }
+
+
+for (int i = 0; i < email2.size(); i += 2) {
+    email3.add(String.join(":", email2.get(i + 1), email2.get(i)));
+}
 
 
     try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
-        for (String key : sourceMap.keySet()) {
-            String value = sourceMap.get(key);
-            out.println(key + ":" + value);
+        for (String list : email3) {
+           out.println(list);
         }
 
 

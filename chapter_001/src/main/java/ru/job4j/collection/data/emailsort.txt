@@ -1,5 +1,4 @@
-foo@gmail.com,ups@pisem.net:user2
-xxx@ya.ru,foo@gmail.com,lol@mail.ru:user1
-xyz@pisem.net,vasya@pupkin.com:user3
-ups@pisem.net,aaa@bbb.ru:user4
-xyz@pisem.net:user5
+user1:xxx@ya.ru
+user2:foo@gmail.com
+user3:xyz@pisem.net
+user7:zzz@ya.ru
