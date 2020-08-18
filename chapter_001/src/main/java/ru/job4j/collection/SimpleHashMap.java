@@ -28,8 +28,8 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         this.table = new Node[capacity];
     }
 
-    public Node<K, V>[] getTable() {
-        return table;
+    public int getSize() {
+        return size;
     }
 
     @Override
@@ -90,13 +90,17 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     public boolean insert(K key, V value) {
         boolean result = false;
         if (size / table.length < loadFactor) {
-            int hash = key.hashCode() % capacity;
+
+            int hash = key == null ? 0 :  key.hashCode() % capacity;
+
             if (table[hash] == null) {
                 modCount++;
                 size++;
                 table[hash] = new Node<>(key, value);
                 result = true;
             }
+
+
         } else if (resize()) {
             int hash = key.hashCode() % capacity;
             table[hash] = new Node<>(key, value);
@@ -125,7 +129,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     }
 
     public V get(K key) throws NoSuchElementException {
-        int hash = key.hashCode() % capacity;
+        int hash = key == null ? 0 :  key.hashCode() % capacity;
         if (table[hash] == null) {
             throw new NoSuchElementException();
         }
@@ -135,11 +139,12 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
 
     public boolean delete(K key) {
         boolean result = false;
-        int hash = key.hashCode() % capacity;
+        int hash = key == null ? 0 :  key.hashCode() % capacity;
         if (table[hash] == null) {
             throw new NoSuchElementException();
         }
         table[hash] = null;
+        size--;
         result = true;
         return result;
     }
@@ -151,11 +156,9 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         map.insert("мчпап3", "в");
         map.insert("выам4", "г");
 
-        Iterator iterator = map.iterator();
+        System.out.println(map.size);
+        map.delete("выа2ип");
+        System.out.println(map.size);
 
-        while (iterator.hasNext()) {
-            Node<String, String> current = (Node<String, String>) iterator.next();
-            System.out.println(current.key + " " + current.value);
-        }
     }
 }
