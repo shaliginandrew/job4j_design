@@ -28,6 +28,10 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         this.table = new Node[capacity];
     }
 
+    public Node<K, V>[] getTable() {
+        return table;
+    }
+
     @Override
     public Iterator<SimpleHashMap.Node<K, V>> iterator() {
 
@@ -75,6 +79,13 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
             this.next = next;
         }
 
+        public K getKey() {
+            return key;
+        }
+
+        public V getValue() {
+            return value;
+        }
     }
 
     public boolean insert(K key, V value) {
