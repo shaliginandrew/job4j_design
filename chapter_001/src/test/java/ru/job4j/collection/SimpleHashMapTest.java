@@ -71,7 +71,7 @@ public class SimpleHashMapTest {
        map.insert(1, "а");
        map.insert(2, "б");
        map.insert(3, "в");
-       Iterator<SimpleHashMap.Node<Integer, String>> it = map.iterator();
+       Iterator<SimpleHashMap.Entry<Integer, String>> it = map.iterator();
         assertTrue(it.hasNext());
         assertThat(it.next().getKey(), is(1));
         assertTrue(it.hasNext());

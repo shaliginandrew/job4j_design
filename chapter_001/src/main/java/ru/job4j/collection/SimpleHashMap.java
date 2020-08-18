@@ -16,8 +16,8 @@ import java.util.*;
  *
  * Методы разрешения коллизий реализовывать не надо. Например: если при добавлении ключ уже есть, то возвращать false.
  */
-public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
-    private Node<K, V>[] table;
+public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Entry<K, V>> {
+    private Entry<K, V>[] table;
     private int capacity = 16;
     private double loadFactor = 0.75;
     private int modCount = 0;
@@ -25,7 +25,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
 
 
     public SimpleHashMap() {
-        this.table = new Node[capacity];
+        this.table = new Entry[capacity];
     }
 
     public int getSize() {
@@ -33,9 +33,9 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     }
 
     @Override
-    public Iterator<SimpleHashMap.Node<K, V>> iterator() {
+    public Iterator<SimpleHashMap.Entry<K, V>> iterator() {
 
-        return new Iterator<SimpleHashMap.Node<K, V>>() {
+        return new Iterator<SimpleHashMap.Entry<K, V>>() {
             int expectedModCount = modCount;
             private int it = 0;
 
@@ -57,23 +57,23 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
             }
 
             @Override
-            public SimpleHashMap.Node<K, V> next() {
+            public SimpleHashMap.Entry<K, V> next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                Node<K, V> result = table[it++];
+                Entry<K, V> result = table[it++];
                 return result;
             }
         };
     }
 
 
-    static class Node<K, V> {
+    public static class Entry<K, V> {
         private K key;
         private V value;
-        private Node<K, V> next;
 
-        public Node(K key, V value) {
+
+        public Entry(K key, V value) {
             this.key = key;
             this.value = value;
         }
@@ -96,14 +96,14 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
             if (table[hash] == null) {
                 modCount++;
                 size++;
-                table[hash] = new Node<>(key, value);
+                table[hash] = new Entry<>(key, value);
                 result = true;
             }
 
 
         } else if (resize()) {
             int hash = key.hashCode() % capacity;
-            table[hash] = new Node<>(key, value);
+            table[hash] = new Entry<>(key, value);
             size++;
             modCount++;
 
@@ -114,10 +114,10 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     public boolean resize() {
         boolean result = false;
         if (size / table.length > loadFactor) {
-            Node<K, V>[] oldTable = table;
+            Entry<K, V>[] oldTable = table;
             size = 0;
             capacity *= 2;
-            table = new Node[capacity];
+            table = new Entry[capacity];
             for (int i = 0; i < oldTable.length; i++) {
                 if (oldTable[i] != null) {
                     insert(oldTable[i].key, oldTable[i].value);
