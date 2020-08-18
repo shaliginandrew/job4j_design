@@ -73,10 +73,9 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         private V value;
         private Node<K, V> next;
 
-        public Node(K key, V value, Node<K, V> next) {
+        public Node(K key, V value) {
             this.key = key;
             this.value = value;
-            this.next = next;
         }
 
         public K getKey() {
@@ -95,12 +94,12 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
             if (table[hash] == null) {
                 modCount++;
                 size++;
-                table[hash] = new Node<>(key, value, null);
+                table[hash] = new Node<>(key, value);
                 result = true;
             }
         } else if (resize()) {
             int hash = key.hashCode() % capacity;
-            table[hash] = new Node<>(key, value, null);
+            table[hash] = new Node<>(key, value);
             size++;
             modCount++;
 
@@ -143,5 +142,20 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         table[hash] = null;
         result = true;
         return result;
+    }
+
+    public static void main(String[] args) {
+        SimpleHashMap<String, String> map = new SimpleHashMap<>();
+        map.insert("выа1", "а");
+        map.insert("выа2ип", "б");
+        map.insert("мчпап3", "в");
+        map.insert("выам4", "г");
+
+        Iterator iterator = map.iterator();
+
+        while (iterator.hasNext()) {
+            Node<String, String> current = (Node<String, String>) iterator.next();
+            System.out.println(current.key + " " + current.value);
+        }
     }
 }

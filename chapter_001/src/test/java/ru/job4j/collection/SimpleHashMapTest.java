@@ -21,15 +21,16 @@ public class SimpleHashMapTest {
 
     @Test
     public void testIterator() {
-        //SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
-      //  map.insert(1, "а");
-       // map.insert(2, "б");
-      //  map.insert(3, "в");
-      //  Iterator iterator = map.iterator();
-      //  assertThat(iterator.hasNext(), is(true));
-      //  assertThat(iterator.next(), is(map.get(1)));
-      //  //assertThat(iterator.hasNext(), is(true));
-      //  assertThat(iterator.next(), is("б"));
+       SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
+       map.insert(1, "а");
+       map.insert(2, "б");
+       map.insert(3, "в");
+       Iterator iterator = map.iterator();
+       SimpleHashMap.Node<Integer, String> current = (SimpleHashMap.Node<Integer, String>) iterator.next();
+       assertThat(iterator.hasNext(), is(true));
+       assertThat(current.getValue(), is(map.get(1)));
+       assertThat(iterator.hasNext(), is(true));
+        assertThat(current.getValue(), is(map.get(2)));
       //  assertThat(iterator.hasNext(), is(true));
      //   assertThat(iterator.next(), is("в"));
      //  assertThat(iterator.hasNext(), is(false));
