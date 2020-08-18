@@ -80,15 +80,33 @@ public class SimpleHashMapTest {
         assertThat(it.next().getKey(), is(3));
         assertFalse(it.hasNext());
 
-     //   assertThat(current.getValue(), is(map.get(2)));
-      //  assertThat(iterator.hasNext(), is(true));
-     //   assertThat(iterator.next(), is("в"));
-     //  assertThat(iterator.hasNext(), is(false));
-      //  assertThat(iterator.next(), is(null));
-
-
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void whenNoSuchElementException() {
+        SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
+        map.insert(1, "1");
+        Iterator<SimpleHashMap.Entry<Integer, String>> it = map.iterator();
+        it.next();
+        it.next();
+    }
+
+    @Test(expected = ConcurrentModificationException.class)
+    public void whenConcurrentModificationException() {
+        SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
+        map.insert(1, "1");
+        Iterator<SimpleHashMap.Entry<Integer, String>> it = map.iterator();
+        it.next();
+        map.insert(2, "2");
+        it.next();
+    }
+
+    @Test
+    public void whenKeyHashcodeNegative() {
+        SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
+        map.insert(-1, "-1");
+        assertThat(map.get(-1), is("-1"));
+    }
 }
 
 

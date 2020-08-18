@@ -90,23 +90,18 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Entry<K, V>> 
     public boolean insert(K key, V value) {
         boolean result = false;
         if (size / table.length < loadFactor) {
-
-            int hash = key == null ? 0 :  key.hashCode() % capacity;
-
+            int hash = key == null ? 0 :  Math.abs(key.hashCode() % capacity);
             if (table[hash] == null) {
                 modCount++;
                 size++;
                 table[hash] = new Entry<>(key, value);
                 result = true;
             }
-
-
         } else if (resize()) {
-            int hash = key.hashCode() % capacity;
+            int hash = key == null ? 0 :  Math.abs(key.hashCode() % capacity);
             table[hash] = new Entry<>(key, value);
             size++;
             modCount++;
-
         }
         return result;
     }
@@ -129,7 +124,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Entry<K, V>> 
     }
 
     public V get(K key) throws NoSuchElementException {
-        int hash = key == null ? 0 :  key.hashCode() % capacity;
+        int hash = key == null ? 0 :  Math.abs(key.hashCode() % capacity);
         if (table[hash] == null) {
             throw new NoSuchElementException();
         }
@@ -139,7 +134,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Entry<K, V>> 
 
     public boolean delete(K key) {
         boolean result = false;
-        int hash = key == null ? 0 :  key.hashCode() % capacity;
+        int hash = key == null ? 0 :  Math.abs(key.hashCode() % capacity);
         if (table[hash] == null) {
             throw new NoSuchElementException();
         }
@@ -147,18 +142,5 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Entry<K, V>> 
         size--;
         result = true;
         return result;
-    }
-
-    public static void main(String[] args) {
-        SimpleHashMap<String, String> map = new SimpleHashMap<>();
-        map.insert("выа1", "а");
-        map.insert("выа2ип", "б");
-        map.insert("мчпап3", "в");
-        map.insert("выам4", "г");
-
-        System.out.println(map.size);
-        map.delete("выа2ип");
-        System.out.println(map.size);
-
     }
 }
