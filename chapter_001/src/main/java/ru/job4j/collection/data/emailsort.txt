@@ -1,7 +1,0 @@
-aaa@bbb.ru user4
-ups@pisem.net user4
-lol@mail.ru user1
-xxx@ya.ru user1
-vasya@pupkin.com user3
-foo@gmail.com user2
-xyz@pisem.net user5

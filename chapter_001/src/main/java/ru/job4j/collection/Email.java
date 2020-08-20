@@ -19,59 +19,43 @@ import java.util.*;
  * Требуется, чтобы асимптотическое время работы полученного решения было
  * линейным, или близким к линейному.
  */
-public class Email {
+public class Email implements Sort {
 
-public void sort(String source, String target) {
-    Map<String, String> map1 = new HashMap<>();
-    Map<String, List<String>> map2 = new HashMap<>();
 
-    try (BufferedReader in = new BufferedReader(new FileReader(source))) {
-        in.lines().forEach(line -> {
-          String[] list1 = line.split(":");
-          String[] list2 = list1[1].split(",");
-            for (int i = 0; i < list2.length; i++) {
+    public void convert(List<User> source) {
+        Map<String, String> map1 = new HashMap<>();
+        Map<String, String> map2 = new HashMap<>();
+        for (int i = 0; i < source.size(); i++) {
+            String[] list1 = source.get(i).getUser().split(":");
+            String[] list2 = list1[1].split(",");
+            for (int j = 0; j < list2.length; j++) {
                 //ключ- имейл пользователя
-                String key = list2[i];
+                String key = list2[j];
                 //значение - имя юзера
                 String value = list1[0];
                 map1.put(key, value);
             }
+        }
 
-
-        });
-
-
-
-       for (String key : map1.keySet()) {
-            System.out.println((key + " " + map1.get(key)));
-       }
-
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-
-
-
-
-
-    try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
         for (String key : map1.keySet()) {
-           out.println(key + " " + map1.get(key));
+            System.out.println(key + " " + map1.get(key));
         }
 
 
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
+
 
     public static void main(String[] args) {
-    Email email = new Email();
-    email.sort("./chapter_001/src/main/java/ru/job4j/collection/data/email.txt",
-            "./chapter_001/src/main/java/ru/job4j/collection/data/emailsort.txt");
+        Email email = new Email();
 
+        List<User> source = Arrays.asList(
+        new User("user1:xxx@ya.ru,foo@gmail.com,lol@mail.ru"),
+        new User("user2:foo@gmail.com,ups@pisem.net"),
+        new User("user3:xyz@pisem.net,vasya@pupkin.com"),
+        new User("user4:ups@pisem.net,aaa@bbb.ru"),
+        new User("user5:xyz@pisem.net")
+        );
+
+       email.convert(source);
     }
-
-
 }
