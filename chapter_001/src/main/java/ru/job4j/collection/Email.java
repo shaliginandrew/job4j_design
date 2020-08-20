@@ -22,50 +22,50 @@ import java.util.*;
 public class Email {
 
 public void sort(String source, String target) {
-    Map<String, String> map1 = new HashMap<>();
-    Map<String, String> map2 = new HashMap<>();
-    List<String> email = new ArrayList<>();
-    List<String> email2 = new ArrayList<>();
-    List<String> email3 = new ArrayList<>();
+    //Map<String, String> map1 = new HashMap<>();
+    Map<String, List<User>> map1 = new HashMap<>();
+    //List<String[]> list = new ArrayList<>();
     String read;
     try (BufferedReader in = new BufferedReader(new FileReader(source))) {
-       in.lines().forEach(line -> {
-          //String[] list = line.split(":");
-          email.add(line);
-       });
+        in.lines().forEach(line -> {
+          String[] list1 = line.split(":");
+          String[] list2 = list1[1].split(",");
+            for (int i = 0; i < list2.length; i++) {
+
+                User user = new User(list1[0]);
+                String key = list2[i];
+                List<User> value = new ArrayList<>();
+
+                //value.add();
+
+               // map1.put(list2[i], );
+
+                }
 
 
+                //System.out.println(list1[0] + " " + list2[i])
+         // for (int i = 0; i < list2[1].length(); i++) {
+           //   map1.put(list1[0], list2[i]);
+       //   }
+        });
+
+
+
+       for (String key : map1.keySet()) {
+            System.out.println((key + " " + map1.get(key)));
+       }
 
     } catch (Exception e) {
         e.printStackTrace();
     }
 
- for (int i = 0; i < email.size(); i++) {
 
 
-
-     for (int j = 1; j < email.size(); j++) {
-
-
-
-         String[] list = email.get(i).split(":");
-         if (!email2.contains(list[1])) {
-             email2.add(list[1]);
-             email2.add(list[0]);
-         }
-
-     }
- }
-
-
-for (int i = 0; i < email2.size(); i += 2) {
-    email3.add(String.join(":", email2.get(i + 1), email2.get(i)));
-}
 
 
     try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
-        for (String list : email3) {
-           out.println(list);
+        for (String key : map1.keySet()) {
+           out.println(key + " " + map1.get(key));
         }
 
 
@@ -75,10 +75,20 @@ for (int i = 0; i < email2.size(); i += 2) {
 }
 
 
+public static class User {
+    private String user;
+
+    public User(String user) {
+        this.user = user;
+    }
+}
+
     public static void main(String[] args) {
     Email email = new Email();
     email.sort("./chapter_001/src/main/java/ru/job4j/collection/data/email.txt",
             "./chapter_001/src/main/java/ru/job4j/collection/data/emailsort.txt");
 
     }
+
+
 }

@@ -1,4 +1,10 @@
-user1:xxx@ya.ru
-user2:foo@gmail.com
-user3:xyz@pisem.net
-user7:zzz@ya.ru
+13,09c9ba3d-9be5-4cab-abdf-a038a75bf6c0 user2
+13,4e67bc2f-6010-45a5-acb3-cafafc5553da user3
+16,ca8e3bbf-db66-47ba-9922-13d5e983f8fd user3
+13,c05a04ae-5ee3-4b01-a624-a96951d5ab34 user1
+9,59615242-87c3-4301-b344-3500c40289ad user1
+13,629845ed-d2c2-488e-9193-5c486e2638b4 user2
+13,fa9fbad0-bb2a-45c8-9c72-cb42197835c2 user5
+10,114e0e3e-1a23-44ea-9f0e-b4bd6aec3905 user4
+11,65651b5c-27b8-4953-964d-cb7eba55ab5d user1
+13,08892d39-01f3-46ad-90e8-635c42e85f59 user4
