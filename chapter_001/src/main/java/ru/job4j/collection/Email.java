@@ -22,31 +22,22 @@ import java.util.*;
 public class Email {
 
 public void sort(String source, String target) {
-    //Map<String, String> map1 = new HashMap<>();
-    Map<String, List<User>> map1 = new HashMap<>();
-    //List<String[]> list = new ArrayList<>();
-    String read;
+    Map<String, String> map1 = new HashMap<>();
+    Map<String, List<String>> map2 = new HashMap<>();
+
     try (BufferedReader in = new BufferedReader(new FileReader(source))) {
         in.lines().forEach(line -> {
           String[] list1 = line.split(":");
           String[] list2 = list1[1].split(",");
             for (int i = 0; i < list2.length; i++) {
-
-                User user = new User(list1[0]);
+                //ключ- имейл пользователя
                 String key = list2[i];
-                List<User> value = new ArrayList<>();
-
-                //value.add();
-
-               // map1.put(list2[i], );
-
-                }
+                //значение - имя юзера
+                String value = list1[0];
+                map1.put(key, value);
+            }
 
 
-                //System.out.println(list1[0] + " " + list2[i])
-         // for (int i = 0; i < list2[1].length(); i++) {
-           //   map1.put(list1[0], list2[i]);
-       //   }
         });
 
 
@@ -54,6 +45,7 @@ public void sort(String source, String target) {
        for (String key : map1.keySet()) {
             System.out.println((key + " " + map1.get(key)));
        }
+
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -71,15 +63,6 @@ public void sort(String source, String target) {
 
     } catch (Exception e) {
         e.printStackTrace();
-    }
-}
-
-
-public static class User {
-    private String user;
-
-    public User(String user) {
-        this.user = user;
     }
 }
 
