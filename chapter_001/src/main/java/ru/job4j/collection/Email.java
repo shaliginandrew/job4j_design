@@ -21,25 +21,22 @@ import java.util.*;
  */
 public class Email implements Sort {
 
+@Override
+/*
 
+ */
     public void convert(List<User> source) {
-        Map<String, String> map1 = new HashMap<>();
-        Map<String, String> map2 = new HashMap<>();
-        for (int i = 0; i < source.size(); i++) {
-            String[] list1 = source.get(i).getUser().split(":");
-            String[] list2 = list1[1].split(",");
-            for (int j = 0; j < list2.length; j++) {
-                //ключ- имейл пользователя
-                String key = list2[j];
-                //значение - имя юзера
-                String value = list1[0];
-                map1.put(key, value);
-            }
-        }
 
-        for (String key : map1.keySet()) {
-            System.out.println(key + " " + map1.get(key));
-        }
+    Map<String, User> emails = new HashMap<>(); //ключ - e-mail, значение - объект
+    Map<User, User> dups = new HashMap<>(); //ключ - пользователь, значение - основной пользователь
+    Set<User> unique = new HashSet<>(); // множество уникальных пользователей
+
+    for (User users : source) {
+
+
+
+
+    }
 
 
     }
@@ -47,15 +44,24 @@ public class Email implements Sort {
 
     public static void main(String[] args) {
         Email email = new Email();
-
         List<User> source = Arrays.asList(
-        new User("user1:xxx@ya.ru,foo@gmail.com,lol@mail.ru"),
-        new User("user2:foo@gmail.com,ups@pisem.net"),
-        new User("user3:xyz@pisem.net,vasya@pupkin.com"),
-        new User("user4:ups@pisem.net,aaa@bbb.ru"),
-        new User("user5:xyz@pisem.net")
-        );
+                 new User("user1", new HashSet<String>(Arrays.asList(
+                         "xxx@ya.ru",
+                         "foo@gmail.com",
+                         "lol@mail.ru"))),
+                new User("user2", new HashSet<String>(Arrays.asList(
+                         "foo@gmail.com",
+                         "ups@pisem.net"))),
+                new User("user3", new HashSet<String>(Arrays.asList(
+                        "xyz@pisem.net",
+                        "vasya@pupkin.com"))),
+                new User("user4", new HashSet<String>(Arrays.asList(
+                        "ups@pisem.net",
+                        "aaa@bbb.ru"))),
 
-       email.convert(source);
+                new User("user5", new HashSet<String>(Arrays.asList(
+                        "xyz@pisem.net")))
+        );
+        // email.convert(source);
     }
 }
