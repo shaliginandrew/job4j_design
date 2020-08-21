@@ -31,17 +31,29 @@ public class Email implements Sort {
     Map<User, User> dups = new HashMap<>(); //ключ - пользователь, значение - основной пользователь
     Set<User> unique = new HashSet<>(); // множество уникальных пользователей
 
-    for (User users : source) {
-
-
-
-
+    for (User user : source) {
+        boolean isMainUser = true;  // Пока считаем, что пользователь основной
+        for (String email : user.getEmails()) {
+            User prevUser = emails.putIfAbsent(email, user);
+            // Уже есть пользователь с таким e-mail
+            if (prevUser != null) {
+             // достаем основного пользователя
+                prevUser = dups.getOrDefault(prevUser, prevUser);
+                prevUser.setEmails(user.getEmails()); // добавляем основному пользователю свои адреса
+                dups.put(user, prevUser);
+                isMainUser = false;
+            }
+        }
+        if (isMainUser) { // если все адреса были уникальными
+            unique.add(user);
+        }
     }
 
-
+    for (User user: unique) {
+        System.out.println(user.getName() + " " + user.getEmails());
     }
 
-
+}
     public static void main(String[] args) {
         Email email = new Email();
         List<User> source = Arrays.asList(
@@ -62,6 +74,6 @@ public class Email implements Sort {
                 new User("user5", new HashSet<String>(Arrays.asList(
                         "xyz@pisem.net")))
         );
-        // email.convert(source);
+         email.convert(source);
     }
 }
