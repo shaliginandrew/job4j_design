@@ -123,24 +123,25 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Entry<K, V>> 
         return result;
     }
 
-    public V get(K key) throws NoSuchElementException {
+    public V get(K key)  {
         int hash = key == null ? 0 :  Math.abs(key.hashCode() % capacity);
-        if (table[hash] == null) {
-            throw new NoSuchElementException();
+        V value = null;
+        if (table[hash] != null && Objects.equals(table[hash].getKey(), key)) {
+            value = table[hash].value;
         }
-        return table[hash].value;
+        return value;
 
     }
 
     public boolean delete(K key) {
         boolean result = false;
         int hash = key == null ? 0 :  Math.abs(key.hashCode() % capacity);
-        if (table[hash] == null) {
-            throw new NoSuchElementException();
+        if (table[hash] != null && Objects.equals(table[hash].getKey(), key)) {
+            table[hash] = null;
+            modCount++;
+            size--;
+            result = true;
         }
-        table[hash] = null;
-        size--;
-        result = true;
         return result;
     }
 }
