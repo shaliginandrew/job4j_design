@@ -29,6 +29,7 @@ public class Email implements Sort {
 
     Map<String, String> map1 = new HashMap<>(); // хранит пару mail -user
     Map<String, String> map2 = new HashMap<>(); // храним пару user - user
+    Map<String, String> map3 = new HashMap<>();
     for (User user : source) {
 
     for (String email : user.getEmails()) {
@@ -51,7 +52,10 @@ public class Email implements Sort {
 
 
     for (String email : map1.keySet()) {
-       map2.get(map1.get(email));
+        String key = null;
+        if (map2.containsKey(map2.get(map1.get(email)))) {
+            map2.get(map2.get(map1.get(email)));
+        }
 
 
     }
