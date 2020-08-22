@@ -39,22 +39,26 @@ public class Email implements Sort {
 
         }
 
-        if (map1.containsKey(email)) {
-
-            map2.put(map1.get(email), user.getName());
+        if (map1.containsKey(email) && map1.get(email) != user.getName()) {
+           // System.out.println(map1.get(email) + " " + user.getName());
+             map2.put(user.getName(), map1.get(email));
         }
 
     }
     }
 
 
+
+
     for (String email : map1.keySet()) {
-        System.out.println(email + " " + map1.get(email));
+       map2.get(map1.get(email));
+
+
     }
 
-    for (String key : map2.keySet()) {
-        System.out.println(key + " " + map1.get(key));
-    }
+   for (String key : map2.keySet()) {
+        System.out.println(key + " " + map2.get(key));
+   }
 
 
 }
