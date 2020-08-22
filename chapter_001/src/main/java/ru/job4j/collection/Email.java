@@ -27,31 +27,35 @@ public class Email implements Sort {
  */
     public void convert(List<User> source) {
 
-    Map<String, User> emails = new HashMap<>(); //ключ - e-mail, значение - объект
-    Map<User, User> dups = new HashMap<>(); //ключ - пользователь, значение - основной пользователь
-    Set<User> unique = new HashSet<>(); // множество уникальных пользователей
-
+    Map<String, String> map1 = new HashMap<>(); // хранит пару mail -user
+    Map<String, String> map2 = new HashMap<>(); // храним пару user - user
     for (User user : source) {
-        boolean isMainUser = true;  // Пока считаем, что пользователь основной
-        for (String email : user.getEmails()) {
-            User prevUser = emails.putIfAbsent(email, user);
-            // Уже есть пользователь с таким e-mail
-            if (prevUser != null) {
-             // достаем основного пользователя
-                prevUser = dups.getOrDefault(prevUser, prevUser);
-                prevUser.setEmails(user.getEmails()); // добавляем основному пользователю свои адреса
-                dups.put(user, prevUser);
-                isMainUser = false;
-            }
+
+    for (String email : user.getEmails()) {
+
+        if (!map1.containsKey(email)) {
+            map1.put(email, user.getName());
+          //  String value =
+
         }
-        if (isMainUser) { // если все адреса были уникальными
-            unique.add(user);
+
+        if (map1.containsKey(email)) {
+
+            map2.put(map1.get(email), user.getName());
         }
+
+    }
     }
 
-    for (User user: unique) {
-        System.out.println(user.getName() + " " + user.getEmails());
+
+    for (String email : map1.keySet()) {
+        System.out.println(email + " " + map1.get(email));
     }
+
+    for (String key : map2.keySet()) {
+        System.out.println(key + " " + map1.get(key));
+    }
+
 
 }
     public static void main(String[] args) {

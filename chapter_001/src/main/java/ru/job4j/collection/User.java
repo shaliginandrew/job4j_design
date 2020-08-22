@@ -14,10 +14,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", emails=" + emails +
-                '}';
+        return "User{" + "name='" + name + '\'' + ", emails=" + emails + '}';
     }
 
     public String getName() {
