@@ -8,15 +8,18 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class  SearchFiles  implements FileVisitor<Path> {
     private List<Path> files = new ArrayList<>();
-    private String ext;
+    private Predicate<Path> condition;
 
-    public SearchFiles(String ext) {
-        this.ext = ext;
+
+    public SearchFiles(Predicate<Path> condition) {
+      this.condition = condition;
+
     }
 
     public List<Path> getFiles() {
@@ -30,9 +33,8 @@ public class  SearchFiles  implements FileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        String fileName = file.getFileName().toString();
-        if (fileName.endsWith(ext)) {
-        files.add(Paths.get(fileName));
+        if (condition.test(file)) {
+        files.add(file.getFileName());
         }
         return CONTINUE;
     }
