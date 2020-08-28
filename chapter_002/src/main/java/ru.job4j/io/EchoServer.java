@@ -17,7 +17,6 @@ public class EchoServer {
                     String str;
 
                     while (!(str = in.readLine()).isEmpty())  {
-                        StringBuffer str2 = new StringBuffer("Добро пожаловать на ProgLang.su");
                         if (str.contains("/?msg=Bye")) {
                             startServer = false;
                         }
