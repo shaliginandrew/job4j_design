@@ -25,6 +25,7 @@ public class Zip {
             e.printStackTrace();
         }
     }
+
     public void packSingleFile(File source, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
             zip.putNextEntry(new ZipEntry(source.getPath()));
@@ -49,9 +50,9 @@ public class Zip {
                 sources.add(file.toFile());
             }
             zip.packFiles(sources, new File(argZip.output()));
-       }
-       if (!argZip.valid()) {
-           System.out.println("Directory for Zip not exist");
-       }
+             }
+               if (!argZip.valid()) {
+                   System.out.println("Directory for Zip not exist");
+               }
+        }
     }
-}
