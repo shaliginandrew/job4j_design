@@ -30,5 +30,6 @@ public class UsageLog4j {
         LOG.debug("Primitive type long: {} ", six);
         LOG.debug("Primitive type boolean: {} ", seven);
         LOG.debug("Primitive type int: {} ", eight);
+
     }
 }
