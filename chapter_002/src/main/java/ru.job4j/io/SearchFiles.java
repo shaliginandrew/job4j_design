@@ -9,16 +9,19 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+
 import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class  SearchFiles  implements FileVisitor<Path> {
 
     private List<Path> files = new ArrayList<>();
     private Predicate<Path> condition;
+    private String directory;
 
 
-    public SearchFiles(Predicate<Path> condition) {
+    public SearchFiles(Predicate<Path> condition, String directory) {
       this.condition = condition;
+      this.directory = directory;
 
     }
 
@@ -34,7 +37,7 @@ public class  SearchFiles  implements FileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         if (condition.test(file)) {
-        files.add(file.getFileName());
+        files.add(Paths.get(this.directory).relativize(file));
         }
         return CONTINUE;
     }

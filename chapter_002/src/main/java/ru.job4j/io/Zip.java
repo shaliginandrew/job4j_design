@@ -1,7 +1,5 @@
 package ru.job4j.io;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,11 +12,11 @@ import java.util.zip.ZipOutputStream;
 
 public class Zip {
 
-    public void packFiles(List<File> sources, File target) {
+    public void packFiles(List<File> sources, File target, String source) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
             for (File file : sources) {
                 zip.putNextEntry(new ZipEntry(file.getPath()));
-                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(file))) {
+                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source + File.separator + file.toString()))) {
                     zip.write(out.readAllBytes());
                 }
             }
@@ -41,7 +39,7 @@ public class Zip {
 
     public static List<Path> searchWithoutExt(Path root, String ext) throws IOException {
         Predicate<Path> condition = p -> !p.toFile().getName().endsWith(ext);
-        SearchFiles seacher = new SearchFiles(condition);
+        SearchFiles seacher = new SearchFiles(condition, root.toString());
         Files.walkFileTree(root, seacher);
         return seacher.getFiles();
     }
@@ -60,7 +58,7 @@ public class Zip {
             for (Path file : paths) {
                 sources.add(file.toFile());
             }
-            zip.packFiles(sources, new File(argZip.output()));
+            zip.packFiles(sources, new File(argZip.output()), argZip.directory());
              }
                if (!argZip.valid()) {
                    System.out.println("Directory for Zip not exist");

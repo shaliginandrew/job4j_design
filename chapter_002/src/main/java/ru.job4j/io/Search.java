@@ -19,7 +19,7 @@ public class Search {
 
     public static List<Path> search(Path root, String ext) throws IOException {
      Predicate<Path> condition = p -> p.toFile().getName().endsWith(ext);
-     SearchFiles seacher = new SearchFiles(condition);
+     SearchFiles seacher = new SearchFiles(condition, root.toString());
      Files.walkFileTree(root, seacher);
      return seacher.getFiles();
     }
