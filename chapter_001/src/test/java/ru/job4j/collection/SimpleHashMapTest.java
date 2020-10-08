@@ -1,15 +1,13 @@
 package ru.job4j.collection;
 
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Node;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
-
 import org.junit.Test;
-import ru.job4j.collection.SimpleHashMap;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.*;
 
 
 

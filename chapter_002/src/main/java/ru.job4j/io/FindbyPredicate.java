@@ -1,13 +1,12 @@
 package ru.job4j.io;
 
-import java.nio.file.Path;
-import java.util.List;
-import java.util.function.Predicate;
+/**
+ *
 
 public class FindbyPredicate {
 
 
-    public List<Path> findByPredicate(Path root, String mode) {
+    public Predicate findByPredicate(Path root, String mode) {
 
 
 
@@ -36,3 +35,4 @@ public class FindbyPredicate {
 
 
 }
+ */
