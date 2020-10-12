@@ -15,43 +15,51 @@ import java.util.regex.Pattern;
 
 public class SearchFilesByCondition {
 
-    public static void main(String[] args) throws IOException {
-        List<String> saveResult = new ArrayList<String>();
-        Args argsWrapper = new Args(args);
-        argsWrapper.validate();
+    List<String> saveResult = new ArrayList<String>();
 
-        Path folder = Paths.get(argsWrapper.directory());
+    public Predicate<Path> newCondition(Args argsWrapper) throws IOException {
+        Predicate<Path> condition = p -> true;
         if (argsWrapper.mode().equals("-f")) {
-            Predicate<Path> condition = p -> p.toFile().getName().equals(argsWrapper.name());
-
-            Files.walk(folder)
-                    .filter(condition).forEach(path -> saveResult.add(String.valueOf(path)));
+            condition = p -> p.toFile().getName().equals(argsWrapper.name());
         }
         if (argsWrapper.mode().equals("-m")) {
-            Predicate<Path> condition = p -> p.toFile().getName().endsWith(argsWrapper.name());
-
-            Files.walk(folder)
-                    .filter(condition).forEach(path -> saveResult.add(String.valueOf(path)));
+            condition = p -> p.toFile().getName().endsWith(argsWrapper.name());
         }
         if (argsWrapper.mode().equals("-r")) {
             Pattern pat = Pattern.compile(argsWrapper.name());
-            Predicate<Path> conditionR = path -> {
-               boolean result = false;
-               Matcher mat = pat.matcher(path.toFile().getName());
-               if (path.toFile().isFile() && mat.find()) {
-                  result = true;
-               }
-               return result;
-           };
-            Files.walk(folder)
-                    .filter(conditionR).forEach(path -> saveResult.add(String.valueOf(path)));
+            condition = path -> {
+                boolean result = false;
+                Matcher mat = pat.matcher(path.toFile().getName());
+                if (path.toFile().isFile() && mat.find()) {
+                    result = true;
+                }
+                return result;
+            };
         }
-        try (PrintWriter out  = new PrintWriter(new BufferedOutputStream(new FileOutputStream(argsWrapper.output())))) {
+        return condition;
+    }
+
+    public void writeLog(Args args) {
+        try (PrintWriter out  = new PrintWriter(new BufferedOutputStream(new FileOutputStream(args.output())))) {
             for (String list : saveResult) {
                 out.println(list);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void search(Args args, Predicate<Path> condition) throws IOException {
+        Path folder = Paths.get(args.directory());
+        Files.walk(folder)
+                .filter(condition).forEach(path -> saveResult.add(String.valueOf(path)));
+    }
+
+    public static void main(String[] args) throws IOException {
+        Args argsWrapper = new Args(args);
+        argsWrapper.validate();
+        SearchFilesByCondition sf = new SearchFilesByCondition();
+        Predicate<Path> condition = sf.newCondition(argsWrapper);
+        sf.search(argsWrapper, condition);
+        sf.writeLog(argsWrapper);
     }
 }
