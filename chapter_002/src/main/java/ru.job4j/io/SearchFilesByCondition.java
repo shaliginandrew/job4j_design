@@ -24,29 +24,21 @@ public class SearchFilesByCondition {
         if (!argsSearchFilesByCondition.valid()) {
             System.out.println("Не верно указана директория");
         }
-
-
         Path folder = Paths.get(argsSearchFilesByCondition.directory());
-
-
         if (argsSearchFilesByCondition.mode().equals("-f")) {
             Predicate<Path> condition = p -> p.toFile().getName().equals(argsSearchFilesByCondition.name());
 
             Files.walk(folder)
                     .filter(condition).forEach(path -> saveResult.add(String.valueOf(path)));
         }
-
         if (argsSearchFilesByCondition.mode().equals("-m")) {
             Predicate<Path> condition = p -> p.toFile().getName().endsWith(argsSearchFilesByCondition.name());
 
             Files.walk(folder)
                     .filter(condition).forEach(path -> saveResult.add(String.valueOf(path)));
         }
-
         if (argsSearchFilesByCondition.mode().equals("-r")) {
             Pattern pat = Pattern.compile(argsSearchFilesByCondition.name());
-
-
             Predicate<Path> conditionR = path -> {
                boolean result = false;
                Matcher mat = pat.matcher(path.toFile().getName());
@@ -55,22 +47,15 @@ public class SearchFilesByCondition {
                }
                return result;
            };
-
-
-           Files.walk(folder)
+            Files.walk(folder)
                     .filter(conditionR).forEach(path -> saveResult.add(String.valueOf(path)));
         }
-
-
         try (PrintWriter out  = new PrintWriter(new BufferedOutputStream(new FileOutputStream(argsSearchFilesByCondition.output())))) {
             for (String list : saveResult) {
                 out.println(list);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 }

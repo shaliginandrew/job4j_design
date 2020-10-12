@@ -10,12 +10,13 @@ public class ArgsSearchFilesByCondition {
         this.args = args;
     }
 
-
     public boolean valid() {
         return Paths.get(args[1]).toFile().isDirectory();
     }
 
     public String directory() {
+
+
         return args[1];
     }
 
@@ -30,7 +31,6 @@ public class ArgsSearchFilesByCondition {
     public String mode() {
         return args[4];
     }
-
 }
 
 
