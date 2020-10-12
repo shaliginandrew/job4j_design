@@ -17,28 +17,24 @@ public class SearchFilesByCondition {
 
     public static void main(String[] args) throws IOException {
         List<String> saveResult = new ArrayList<String>();
-        ArgsSearchFilesByCondition argsSearchFilesByCondition = new ArgsSearchFilesByCondition(args);
-        if (args.length != 7) {
-            throw new IllegalArgumentException("Не все аргументы заданы");
-        }
-        if (!argsSearchFilesByCondition.valid()) {
-            System.out.println("Не верно указана директория");
-        }
-        Path folder = Paths.get(argsSearchFilesByCondition.directory());
-        if (argsSearchFilesByCondition.mode().equals("-f")) {
-            Predicate<Path> condition = p -> p.toFile().getName().equals(argsSearchFilesByCondition.name());
+        Args argsWrapper = new Args(args);
+        argsWrapper.validate();
+
+        Path folder = Paths.get(argsWrapper.directory());
+        if (argsWrapper.mode().equals("-f")) {
+            Predicate<Path> condition = p -> p.toFile().getName().equals(argsWrapper.name());
 
             Files.walk(folder)
                     .filter(condition).forEach(path -> saveResult.add(String.valueOf(path)));
         }
-        if (argsSearchFilesByCondition.mode().equals("-m")) {
-            Predicate<Path> condition = p -> p.toFile().getName().endsWith(argsSearchFilesByCondition.name());
+        if (argsWrapper.mode().equals("-m")) {
+            Predicate<Path> condition = p -> p.toFile().getName().endsWith(argsWrapper.name());
 
             Files.walk(folder)
                     .filter(condition).forEach(path -> saveResult.add(String.valueOf(path)));
         }
-        if (argsSearchFilesByCondition.mode().equals("-r")) {
-            Pattern pat = Pattern.compile(argsSearchFilesByCondition.name());
+        if (argsWrapper.mode().equals("-r")) {
+            Pattern pat = Pattern.compile(argsWrapper.name());
             Predicate<Path> conditionR = path -> {
                boolean result = false;
                Matcher mat = pat.matcher(path.toFile().getName());
@@ -50,7 +46,7 @@ public class SearchFilesByCondition {
             Files.walk(folder)
                     .filter(conditionR).forEach(path -> saveResult.add(String.valueOf(path)));
         }
-        try (PrintWriter out  = new PrintWriter(new BufferedOutputStream(new FileOutputStream(argsSearchFilesByCondition.output())))) {
+        try (PrintWriter out  = new PrintWriter(new BufferedOutputStream(new FileOutputStream(argsWrapper.output())))) {
             for (String list : saveResult) {
                 out.println(list);
             }
