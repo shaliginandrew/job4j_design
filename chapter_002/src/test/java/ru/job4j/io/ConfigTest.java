@@ -1,6 +1,6 @@
 package ru.job4j.io;
 
-import org.junit.Test;
+import org.junit.*;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -8,9 +8,8 @@ import static org.junit.Assert.assertThat;
 public class ConfigTest {
 
     @Test
-    public void testOne() {
-        String path = "app.properties";
-        Config config = new Config(path);
+    public void testConfigOne() {
+        Config config = new Config("app.properties");
         config.load();
         assertThat(
                 config.value("hibernate.connection.password"),
@@ -19,7 +18,7 @@ public class ConfigTest {
     }
 
     @Test
-    public void testTwo() {
+    public void testConfigTwo() {
         String path = "./chapter_002/data/pair_without_comment.properties";
         Config config = new Config(path);
         config.load();
@@ -28,5 +27,4 @@ public class ConfigTest {
                 is("Petr Arsentev")
         );
     }
-
 }

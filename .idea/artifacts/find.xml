@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/find</output-path>
     <root id="archive" name="find.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/chapter_002/src/main/resources/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/chapter_002/data/META-INF/MANIFEST.MF" />
       </element>
     </root>
   </artifact>
