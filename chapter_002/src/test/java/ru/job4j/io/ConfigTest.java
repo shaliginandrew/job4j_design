@@ -8,7 +8,7 @@ import static org.junit.Assert.assertThat;
 public class ConfigTest {
 
     @Test
-    public void testConfigOne() {
+    public void testConfigOness() {
         Config config = new Config("app.properties");
         config.load();
         assertThat(
