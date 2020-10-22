@@ -46,7 +46,7 @@ insert into car(name, id_carbody, id_capacity, id_transmission) values ('БМВ'
 insert into car(name, id_carbody, id_capacity, id_transmission) values ('Шкода', 2, 3, 2);
 insert into car(name, id_carbody, id_capacity, id_transmission) values ('Нива', 2, 3, 5);
 
--- Вывести список всех машин и все привязанные к ним детали.
+-- Вывести список всех машин и все привязанные к ним детали
 select car.name, carbody.name, engine.capacity, transmission.type
 from car
 join carbody on car.id_carbody = carbody.id
