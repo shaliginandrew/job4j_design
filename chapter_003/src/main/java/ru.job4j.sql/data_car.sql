@@ -54,17 +54,8 @@ join engine on car.id_capacity = engine.id
 join transmission on car.id_transmission = transmission.id;
 
 -- Вывести отдельно детали, которые не используются в машине: кузова, двигатели, коробки передач
-select carbody.name as Тип_кузова from carbody
-where
-carbody.id  in (select unnest(array [( select array(select unnest(array [generate_series(1, (select count(*) from carbody))])
-except select unnest(array [(SELECT array(select car.id_carbody from car))])))]));
+select carbody.name as Тип_кузова from carbody left join car on carbody.id = car.id_carbody where car.name is null;
 
-select engine.capacity as Объем_двигателя from engine
-where
-engine.id  in (select unnest(array [( select array(select unnest(array [generate_series(1, (select count(*) from engine))])
-except select unnest(array [(SELECT array(select car.id_capacity from car))])))]));
+select engine.capacity as Объем_двигателя from engine left join car on engine.id = car.id_capacity where car.name is null;
 
-select transmission.type as Тип_трансмиссии from transmission
-where
-transmission.id  in (select unnest(array [( select array(select unnest(array [generate_series(1, (select count(*) from transmission))])
-except select unnest(array [(SELECT array(select car.id_transmission from car))])))]));
+select transmission.type as Коробка_передач from transmission left join car on transmission.id = car.id_transmission where car.name is null;
