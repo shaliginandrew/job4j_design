@@ -9,7 +9,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/chapter_001/pom.xml" />
-        <option value="$PROJECT_DIR$/chapter_003/pom.xml" />
+        <option value="$PROJECT_DIR$/chapter_002/pom.xml" />
         <option value="$PROJECT_DIR$/chapter_004/pom.xml" />
         <option value="$PROJECT_DIR$/chapter_005/pom.xml" />
         <option value="$PROJECT_DIR$/сhapter_002/pom.xml" />
@@ -19,7 +19,7 @@
   <component name="ProjectPlainTextFileTypeManager">
     <file url="file://$PROJECT_DIR$/app.properties" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" default="false" project-jdk-name="14" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" default="false" project-jdk-name="openjdk-15" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

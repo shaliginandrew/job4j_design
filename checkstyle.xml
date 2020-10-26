@@ -12,6 +12,7 @@
     <!-- See http://checkstyle.sf.net/config_sizes.html -->
     <module name="FileLength"/>
 
+
     <!-- Checks for Headers                                -->
     <!-- See http://checkstyle.sf.net/config_header.html   -->
     <!-- <module name="Header"> -->
@@ -26,6 +27,7 @@
         <module name="ConstantName"/>
         <!--<module name="LocalFinalVariableName"/>-->
         <module name="LocalVariableName"/>
+
         <module name="MemberName"/>
         <module name="MethodName"/>
         <module name="PackageName">
@@ -33,6 +35,7 @@
         </module>
         <module name="ParameterName"/>
         <module name="StaticVariableName"/>
+
         <module name="TypeName"/>
 
         <!-- Checks for Size Violations.                    -->
@@ -73,6 +76,7 @@
         <!--<module name="HiddenField"/>-->
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
+
         <!--<module name="MagicNumber"/>-->
         <module name="MissingSwitchDefault"/>
         <module name="SimplifyBooleanExpression"/>
@@ -93,5 +97,6 @@
         <module name="UpperEll"/>
 
     </module>
+
 
 </module>

@@ -1,9 +1,10 @@
 package ru.job4j.collection;
 import org.junit.Test;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class ForwardLinkedTest {
@@ -20,17 +21,6 @@ public class ForwardLinkedTest {
     public void whenDeleteEmptyLinked() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
         linked.deleteFirst();
-    }
-
-    @Test
-    public void whenMultiDelete() {
-        ForwardLinked<Integer> linked = new ForwardLinked<>();
-        linked.add(1);
-        linked.add(2);
-        linked.deleteFirst();
-        Iterator<Integer> it = linked.iterator();
-        System.out.println(it.next());
-        assertThat(it.next(), is(2));
     }
 
     @Test
